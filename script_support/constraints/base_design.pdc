@@ -29,3 +29,16 @@ set_io -port_name USB0_RESETB \
     -fixed true \
     -DIRECTION OUTPUT \
     -io_std LVCMOS33 
+
+set_io -port_name MMUART1_RXD  \
+    -pin_name G14              \
+    -fixed true                \
+    -io_std LVCMOS33           \
+    -DIRECTION INPUT
+
+
+set_io -port_name MMUART1_TXD  \
+    -pin_name G13              \
+    -fixed true                \
+    -io_std LVCMOS33           \
+    -DIRECTION OUTPUT

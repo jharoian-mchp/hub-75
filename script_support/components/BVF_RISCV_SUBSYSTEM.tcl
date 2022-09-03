@@ -23,12 +23,9 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {USB_DATA7} -port_direction
 sd_create_scalar_port -sd_name ${sd_name} -port_name {USB_OCn} -port_direction {IN} 
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {UART0_TXD} -port_direction {OUT}
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_TXD} -port_direction {OUT}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {MMUART1_TXD} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {UART0_RXD} -port_direction {IN}
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_RXD} -port_direction {IN}
-
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_RTS} -port_direction {OUT}
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_CTS} -port_direction {IN}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {MMUART1_RXD} -port_direction {IN}
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {MSS_DLL_LOCKS} -port_direction {OUT}
 
@@ -168,14 +165,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:I2C_1_SDA" "I2C_1_SD
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_0_RXD" "UART0_RXD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_0_TXD" "UART0_TXD" }
 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_RXD_F2M" "M2_UART_RXD" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_TXD_M2F" "M2_UART_TXD" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_RTS_M2F" "M2_UART_RTS" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_CTS_F2M" "M2_UART_CTS" }
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_SOC_MSS:MMUART_1_DCD_F2M} -value {VCC}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_SOC_MSS:MMUART_1_DSR_F2M} -value {VCC}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_SOC_MSS:MMUART_1_RI_F2M} -value {VCC}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_SOC_MSS:MMUART_1_DTR_M2F}
+sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_RXD_F2M" "MMUART1_RXD" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MMUART_1_TXD_M2F" "MMUART1_TXD" }
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND_DLL_LOCKS:A" "PF_SOC_MSS:FIC_0_DLL_LOCK_M2F" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND_DLL_LOCKS:B" "PF_SOC_MSS:FIC_1_DLL_LOCK_M2F" }

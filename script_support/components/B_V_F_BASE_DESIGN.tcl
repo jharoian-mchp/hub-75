@@ -66,6 +66,8 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {DM} -port_direction {OUT} -po
 sd_create_scalar_port -sd_name ${sd_name} -port_name {P9_19} -port_direction {INOUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {P9_20} -port_direction {INOUT}
 
+sd_create_scalar_port -sd_name ${sd_name} -port_name {MMUART1_TXD} -port_direction {OUT}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {MMUART1_RXD} -port_direction {IN}
 
 #-------------------------------------------------------------------------------
 # Analog to Digital Converter pins (for cape analog inputs)
@@ -124,6 +126,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:I2C_1_SCL" 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:I2C_1_SDA" "I2C_1_SDA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:UART0_RXD" "UART0_RXD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:UART0_TXD" "UART0_TXD" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:MMUART1_RXD" "MMUART1_RXD" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:MMUART1_TXD" "MMUART1_TXD" }
 
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:MSS_RESET_N_M2F" "CLOCKS_AND_RESETS:EXT_RST_N" }

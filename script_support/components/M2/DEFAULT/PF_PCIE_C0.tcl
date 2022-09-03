@@ -58,7 +58,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_PCIE:2.0.116} -component_n
 "UI_PCIE_0_MASTER_TYPE_BAR_4_TABLE:Disabled"  \
 "UI_PCIE_0_MASTER_TYPE_BAR_5_TABLE:Disabled"  \
 "UI_PCIE_0_NUM_FTS:63"  \
-"UI_PCIE_0_NUMBER_OF_LANES:x2"  \
+"UI_PCIE_0_NUMBER_OF_LANES:x1"  \
 "UI_PCIE_0_PHY_REF_CLK_SLOT:Slot"  \
 "UI_PCIE_0_PORT_TYPE:Root Port"  \
 "UI_PCIE_0_REF_CLK_FREQ:100"  \

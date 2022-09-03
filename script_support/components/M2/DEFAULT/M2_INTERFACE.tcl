@@ -19,11 +19,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {PCIE_INTERRUPT} -port_dire
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PERST0n} -port_direction {OUT} 
 
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PCM_CLK} -port_direction {IN} 
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PCM_SYNC} -port_direction {IN} 
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PCM_IN} -port_direction {IN} 
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PCM_OUT} -port_direction {OUT} 
-sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_WAKEn} -port_direction {IN} 
+#<CJ>sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_WAKEn} -port_direction {OUT} 
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_CLKREQ0n} -port_direction {IN} 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_W_DISABLE1n} -port_direction {OUT} 
@@ -34,8 +30,6 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_I2C_ALTn} -port_directi
 #-------------------------------------------------------------------------------
 # Instantiate components
 #-------------------------------------------------------------------------------
-
-#sd_instantiate_component -sd_name ${sd_name} -component_name {M2_USB} -instance_name {M2_USB}
 
 sd_instantiate_component -sd_name ${sd_name} -component_name {PCIE_INITIATOR} -instance_name {PCIE_INITIATOR}
 sd_instantiate_hdl_core -sd_name ${sd_name} -hdl_core_name {AXI_ADDRESS_SHIM} -instance_name {AXI_ADDRESS_SHIM_0} 
@@ -67,9 +61,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE:AXI_0_MASTER" "AXI_ADDRESS
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI_ADDRESS_SHIM_0:AXI4_INITIATOR" "PCIE_INITIATOR:AXI4mmaster0" }
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE:PCIESS_LANE0_DRI_SLAVE" "RECONFIGURATION_INTERFACE_0:Q0_LANE0_DRI" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE:PCIESS_LANE1_DRI_SLAVE" "RECONFIGURATION_INTERFACE_0:Q0_LANE1_DRI" }
 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE_REF_CLK" "PCIE:PCIESS_LANE0_CDR_REF_CLK_0" "PCIE:PCIESS_LANE1_CDR_REF_CLK_0" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE_REF_CLK" "PCIE:PCIESS_LANE0_CDR_REF_CLK_0" }
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PCIE_INTERRUPT" "PCIE:PCIE_0_INTERRUPT_OUT" }
 
@@ -99,19 +92,14 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {RECONFIGURATION_INTERFACE_0:
 #-------------------------------------------------------------------------------
 # Temporary - rework once pin assignment confirmed.
 #-------------------------------------------------------------------------------
-sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND4} -instance_name {AND4_0} 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND4_0:Y" "M2_PCM_OUT"} 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND4_0:A" "M2_PCM_CLK"} 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND4_0:B" "M2_PCM_SYNC"} 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND4_0:C" "M2_PCM_IN"} 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND4_0:D" "M2_UART_WAKEn"} 
-
 sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND2} -instance_name {AND2_0}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:Y" "M2_W_DISABLE1n"} 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:A" "M2_CLKREQ0n"} 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:B" "M2_PEWAKEn"} 
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"M2_I2C_ALTn" "M2_W_DISABLE2n"} 
+
+#<CJ>sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {M2_UART_WAKEn} -value {VCC}
 
 # TODO: connect INIT_DONE to clocks and reset block.
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PCIE:INIT_DONE} -value {GND}

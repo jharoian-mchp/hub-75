@@ -23,7 +23,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_DRI:1.1.104} -component_na
 "PLL1_SE:false"  \
 "PLL1_SW:false"  \
 "Q0_LANE0:true"  \
-"Q0_LANE1:true"  \
+"Q0_LANE1:false"  \
 "Q0_LANE2:false"  \
 "Q0_LANE3:false"  \
 "Q0_TXPLL0:false"  \
