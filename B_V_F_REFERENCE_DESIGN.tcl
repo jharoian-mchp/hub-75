@@ -154,9 +154,7 @@ import_files \
     -convert_EDN_to_HDL 0 \
     -io_pdc "${constraint_path}/base_design.pdc" \
     -io_pdc "./script_support/components/CAPE/$cape_option/constraints/cape.pdc" \
-    -io_pdc "./script_support/components/M2/$m2_option/constraints/M2.pdc" \
-    -io_pdc "${constraint_path}/MIPI_CSI_INTERFACE.pdc" \
-    -io_pdc "${constraint_path}/ICICLE_USB.pdc"
+    -io_pdc "./script_support/components/M2/$m2_option/constraints/M2.pdc" 
 
 #
 # // Associate imported constraints with the design flow
