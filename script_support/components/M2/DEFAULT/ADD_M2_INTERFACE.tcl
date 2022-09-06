@@ -1,7 +1,6 @@
 puts "======== Add M.2 option: DEFAULT ========"
 
 
-source script_support/components/M2/DEFAULT/M2_USB.tcl
 source script_support/components/M2/DEFAULT/PCIE_INITIATOR.tcl 
 source script_support/components/M2/DEFAULT/RECONFIGURATION_INTERFACE.tcl 
 source script_support/components/M2/DEFAULT/PF_PCIE_C0.tcl 
