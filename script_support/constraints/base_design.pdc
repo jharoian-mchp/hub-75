@@ -42,3 +42,8 @@ set_io -port_name MMUART1_TXD  \
     -fixed true                \
     -io_std LVCMOS33           \
     -DIRECTION OUTPUT
+
+set_io -port_name USER_BUTTON  \
+    -pin_name U12              \
+    -fixed true                \
+    -DIRECTION INPUT

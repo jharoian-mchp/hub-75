@@ -270,6 +270,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"DQS_N" "BVF_RISCV_SUBSYSTEM:DQS
 #sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM_D3_N" "MIPI_CSI_INTERFACE_0:RXD_N[3:3]"} 
 
 
+sd_connect_pin_to_port -sd_name {B_V_F_BASE_DESIGN} -pin_name {BVF_RISCV_SUBSYSTEM:USER_BUTTON} -port_name {}
+
 #-------------------------------------------------------------------------------
 # Unused ports.
 #-------------------------------------------------------------------------------

@@ -65,6 +65,8 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {DQS} -port_direction {INOUT} 
 sd_create_bus_port -sd_name ${sd_name} -port_name {DQS_N} -port_direction {INOUT} -port_range {[3:0]} -port_is_pad {1}
 sd_create_bus_port -sd_name ${sd_name} -port_name {DM} -port_direction {OUT} -port_range {[3:0]} -port_is_pad {1}
 
+sd_create_scalar_port -sd_name ${sd_name} -port_name {USER_BUTTON} -port_direction {IN} 
+
 
 #-------------------------------------------------------------------------------
 # Analog to Digital Converter pins (for cape analog inputs)
@@ -240,6 +242,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[62]" "IH
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[61]" "IHC_SUBSYSTEM_0:U54_2_IRQ" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[60]" "IHC_SUBSYSTEM_0:U54_3_IRQ" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[59]" "IHC_SUBSYSTEM_0:U54_4_IRQ" }
+
+sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:GPIO_2_F2M_30" "USER_BUTTON"}
 
 # Add bus net connections
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:CA" "CA" }
