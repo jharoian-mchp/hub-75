@@ -221,20 +221,20 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:USB_NXT" "USB_NXT" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:USB_STP" "USB_STP" }
 
 #-------------------------------------------------------------------------------
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CLK_EMMC_CLK" "PF_SOC_MSS:SD_CLK_EMMC_CLK" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CMD_EMMC_CMD" "PF_SOC_MSS:SD_CMD_EMMC_CMD" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA0_EMMC_DATA0" "PF_SOC_MSS:SD_DATA0_EMMC_DATA0" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA1_EMMC_DATA1" "PF_SOC_MSS:SD_DATA1_EMMC_DATA1" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA2_EMMC_DATA2" "PF_SOC_MSS:SD_DATA2_EMMC_DATA2" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA3_EMMC_DATA3" "PF_SOC_MSS:SD_DATA3_EMMC_DATA3" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_POW_EMMC_DATA4" "PF_SOC_MSS:SD_POW_EMMC_DATA4" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_SEL_EMMC_DATA5" "PF_SOC_MSS:SD_VOLT_SEL_EMMC_DATA5" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_EN_EMMC_DATA6" "PF_SOC_MSS:SD_VOLT_EN_EMMC_DATA6" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_CMD_DIR_EMMC_DATA7" "PF_SOC_MSS:SD_VOLT_CMD_DIR_EMMC_DATA7" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_DIR_1_3_EMMC_UNUSED" "PF_SOC_MSS:SD_VOLT_DIR_1_3_EMMC_UNUSED" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_DIR_0_EMMC_UNUSED" "PF_SOC_MSS:SD_VOLT_DIR_0_EMMC_UNUSED" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CD_EMMC_STRB" "PF_SOC_MSS:SD_CD_EMMC_STRB" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_WP_EMMC_RSTN" "PF_SOC_MSS:SD_WP_EMMC_RSTN" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CLK_EMMC_CLK" "PF_SOC_MSS:SD_CLK" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CMD_EMMC_CMD" "PF_SOC_MSS:SD_CMD" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA0_EMMC_DATA0" "PF_SOC_MSS:SD_DATA0" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA1_EMMC_DATA1" "PF_SOC_MSS:SD_DATA1" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA2_EMMC_DATA2" "PF_SOC_MSS:SD_DATA2" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_DATA3_EMMC_DATA3" "PF_SOC_MSS:SD_DATA3" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_POW_EMMC_DATA4" "PF_SOC_MSS:SD_POW" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_SEL_EMMC_DATA5" "PF_SOC_MSS:SD_VOLT_SEL" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_EN_EMMC_DATA6" "PF_SOC_MSS:SD_VOLT_EN" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_CMD_DIR_EMMC_DATA7" "PF_SOC_MSS:SD_VOLT_CMD_DIR" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_DIR_1_3_EMMC_UNUSED" "PF_SOC_MSS:SD_VOLT_DIR_1_3" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_VOLT_DIR_0_EMMC_UNUSED" "PF_SOC_MSS:SD_VOLT_DIR_0" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_CD_EMMC_STRB" "PF_SOC_MSS:SD_CD" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"SD_WP_EMMC_RSTN" "PF_SOC_MSS:SD_WP" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[63]" "IHC_SUBSYSTEM_0:E51_IRQ" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[62]" "IHC_SUBSYSTEM_0:U54_1_IRQ" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_SOC_MSS:MSS_INT_F2M[61]" "IHC_SUBSYSTEM_0:U54_2_IRQ" }
