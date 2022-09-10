@@ -4,23 +4,11 @@ set_iobank -bank_name Bank1  \
     -update_iostd true
     
 
-set_io -port_name P9_11	\
-    -pin_name B5	\
-    -fixed true	\
-    -io_std LVCMOS33  \
-    -DIRECTION IN
-
 set_io -port_name P9_12	\
     -pin_name C5	\
     -fixed true	\
     -io_std LVCMOS33  \
     -DIRECTION INOUT
-
-set_io -port_name P9_13	\
-    -pin_name C7	\
-    -fixed true	\
-    -io_std LVCMOS33  \
-    -DIRECTION OUT
 
 set_io -port_name P9_14	\
     -pin_name C6	\
@@ -39,19 +27,6 @@ set_io -port_name P9_16	\
     -fixed true	\
     -io_std LVCMOS33  \
     -DIRECTION OUT
-
-
-set_io -port_name P9_19 \
-    -pin_name E13	\
-    -fixed true	\
-    -io_std LVCMOS33  \
-    -DIRECTION INOUT    
-    
-set_io -port_name P9_20	\
-    -pin_name F13	\
-    -fixed true	\
-    -io_std LVCMOS33  \
-    -DIRECTION INOUT
 
 
 set_io -port_name P9_23	\
