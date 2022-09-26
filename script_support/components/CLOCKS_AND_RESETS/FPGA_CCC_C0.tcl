@@ -2,7 +2,7 @@
 # Family: PolarFireSoC
 # Part Number: MPFS025T-FCVG484E
 # Create and Configure the core component FPGA_CCC_C0
-create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.100} -component_name {FPGA_CCC_C0} -params {\
+create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.214} -component_name {FPGA_CCC_C0} -params {\
 "DLL_CLK_0_BANKCLK_EN:false"  \
 "DLL_CLK_0_DEDICATED_EN:false"  \
 "DLL_CLK_0_FABCLK_EN:false"  \
