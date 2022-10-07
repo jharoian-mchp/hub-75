@@ -6,6 +6,8 @@ source script_support/components/M2/DEFAULT/RECONFIGURATION_INTERFACE.tcl
 source script_support/components/M2/DEFAULT/PF_PCIE_C0.tcl 
 source script_support/components/M2/DEFAULT/M2_INTERFACE.tcl
 
+source script_support/components/FIC_1_INITIATOR.tcl 
+
 #-------------------------------------------------------------------------------
 # Modify the CLOCKS_AND_RESET block to add the required PCIe clocks generation.
 #-------------------------------------------------------------------------------
@@ -19,6 +21,7 @@ sd_update_instance -sd_name {B_V_F_BASE_DESIGN} -instance_name {CLOCKS_AND_RESET
 #-------------------------------------------------------------------------------
 
 set sd_name {B_V_F_BASE_DESIGN}
+
 
 #-------------------------------------------------------------------------------
 
@@ -34,25 +37,24 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PERST0n} -port_directio
 
 sd_instantiate_component -sd_name ${sd_name} -component_name {M2_INTERFACE} -instance_name {M2_INTERFACE_0} 
 
-# Add FIC0_INITIATOR instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {FIC0_INITIATOR} -instance_name {FIC0_INITIATOR}
-
+# Add FIC1_INITIATOR instance
+sd_instantiate_component -sd_name ${sd_name} -component_name {FIC_1_INITIATOR} -instance_name {FIC1_INITIATOR}
 
 
 #-------------------------------------------------------------------------------
 # Add bus interface net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"FIC0_INITIATOR:AXI4mmaster0" "BVF_RISCV_SUBSYSTEM:FIC_0_AXI4_INITIATOR" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"FIC1_INITIATOR:AXI4mmaster0" "BVF_RISCV_SUBSYSTEM:FIC_1_AXI4_INITIATOR" }
 
 
 
 #-------------------------------------------------------------------------------
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:FIC_0_ACLK" "FIC0_INITIATOR:ACLK"}
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:FIC_0_FABRIC_RESET_N" "FIC0_INITIATOR:ARESETN"}
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:FIC_0_ACLK" "FIC1_INITIATOR:ACLK"}
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:FIC_0_FABRIC_RESET_N" "FIC1_INITIATOR:ARESETN"}
 
 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:FIC_0_AXI4_TARGET" "M2_INTERFACE_0:AXI4_INITIATOR"}
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:FIC_1_AXI4_TARGET" "M2_INTERFACE_0:AXI4_INITIATOR"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:M2_APB_MTARGET" "M2_INTERFACE_0:APB_TARGET"}
-sd_connect_pins -sd_name ${sd_name} -pin_names {"FIC0_INITIATOR:AXI4mslave0" "M2_INTERFACE_0:AXI_TARGET"}
+sd_connect_pins -sd_name ${sd_name} -pin_names {"FIC1_INITIATOR:AXI4mslave0" "M2_INTERFACE_0:AXI_TARGET"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:CLKS_TO_XCVR" "M2_INTERFACE_0:CLKS_FROM_TXPLL_TO_PCIE_0"} 
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CLOCKS_AND_RESETS:FIC_0_ACLK" "M2_INTERFACE_0:ACLK"} 
@@ -84,6 +86,4 @@ sd_rename_port -sd_name ${sd_name} -current_port_name {PCIESS_LANE_RXD0_P} -new_
 sd_rename_port -sd_name ${sd_name} -current_port_name {PCIESS_LANE_TXD0_N} -new_port_name {M2_PET0_N}
 sd_rename_port -sd_name ${sd_name} -current_port_name {PCIESS_LANE_TXD0_P} -new_port_name {M2_PET0_P}
 
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {FIC0_INITIATOR:AXI4mslave1}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {FIC0_INITIATOR:AXI4mslave2}
 

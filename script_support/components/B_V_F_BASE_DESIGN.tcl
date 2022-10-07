@@ -275,7 +275,7 @@ sd_connect_pin_to_port -sd_name {B_V_F_BASE_DESIGN} -pin_name {BVF_RISCV_SUBSYST
 #-------------------------------------------------------------------------------
 # Unused ports.
 #-------------------------------------------------------------------------------
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {BVF_RISCV_SUBSYSTEM:FIC_1_AXI4_TARGET}
+# sd_mark_pins_unused -sd_name ${sd_name} -pin_names {BVF_RISCV_SUBSYSTEM:FIC_1_AXI4_TARGET}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {BVF_RISCV_SUBSYSTEM:FIC_2_AXI4_TARGET}
 
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {BVF_RISCV_SUBSYSTEM:HSI_APB_MTARGET}

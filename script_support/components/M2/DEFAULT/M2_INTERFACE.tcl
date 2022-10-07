@@ -2,6 +2,7 @@
 set sd_name {M2_INTERFACE}
 create_smartdesign -sd_name ${sd_name}
 
+auto_promote_pad_pins -promote_all 1
 
 #-------------------------------------------------------------------------------
 # Create top level ports
