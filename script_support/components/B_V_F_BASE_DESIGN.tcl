@@ -1,3 +1,6 @@
+
+source script_support/components/BVF_RISCV_SUBSYSTEM/USER_LED_GPIO_PADS.tcl
+
 # Creating SmartDesign B_V_F_BASE_DESIGN
 set sd_name {B_V_F_BASE_DESIGN}
 create_smartdesign -sd_name ${sd_name}
@@ -233,6 +236,16 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"DQS_N" "BVF_RISCV_SUBSYSTEM:DQS
 
 
 #-------------------------------------------------------------------------------
+# User LEDs
+#-------------------------------------------------------------------------------
+auto_promote_pad_pins -promote_all 1
+sd_instantiate_component -sd_name ${sd_name} -component_name {USER_LED_PADS} -instance_name {USER_LED_PADS_0} 
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:USER_LED_GPIO_OUT" "USER_LED_PADS_0:USER_LED_GPIO_OUT"} 
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:USER_LED_GPIO_OE" "USER_LED_PADS_0:USER_LED_GPIO_OE"} 
+sd_connect_pins -sd_name ${sd_name} -pin_names {"BVF_RISCV_SUBSYSTEM:USER_LED_GPIO_IN" "USER_LED_PADS_0:USER_LED_GPIO_IN"} 
+auto_promote_pad_pins -promote_all 0
+
+#-------------------------------------------------------------------------------
 # MIPI CSI-2 RX interface
 #-------------------------------------------------------------------------------
 #sd_create_scalar_port -sd_name ${sd_name} -port_name {CAM_C_N} -port_direction {IN} 
@@ -270,7 +283,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"DQS_N" "BVF_RISCV_SUBSYSTEM:DQS
 #sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM_D3_N" "MIPI_CSI_INTERFACE_0:RXD_N[3:3]"} 
 
 
-sd_connect_pin_to_port -sd_name {B_V_F_BASE_DESIGN} -pin_name {BVF_RISCV_SUBSYSTEM:USER_BUTTON} -port_name {}
+sd_connect_pin_to_port -sd_name ${sd_name} -pin_name {BVF_RISCV_SUBSYSTEM:USER_BUTTON} -port_name {}
 
 #-------------------------------------------------------------------------------
 # Unused ports.
