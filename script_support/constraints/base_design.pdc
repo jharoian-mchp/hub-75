@@ -71,3 +71,76 @@ set_io -port_name P9_20	\
     -fixed true	\
     -io_std LVCMOS33  \
     -DIRECTION INOUT
+
+
+set_io -port_name P8_PIN3_USER_LED_0	\
+    -pin_name A7	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN4_USER_LED_1	\
+    -pin_name D6	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN5_USER_LED_2	\
+    -pin_name D7	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN6_USER_LED_3	\
+    -pin_name D8	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN7_USER_LED_4	\
+    -pin_name D9	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN8_USER_LED_5	\
+    -pin_name B8	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN9_USER_LED_6	\
+    -pin_name A8	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN10_USER_LED_7	\
+    -pin_name C9	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN11_USER_LED_8	\
+    -pin_name C10	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN12_USER_LED_9	\
+    -pin_name B9	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN13_USER_LED_10	\
+    -pin_name B10	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT
+
+set_io -port_name P8_PIN14_USER_LED_11	\
+    -pin_name F10	\
+    -fixed true	\
+    -io_std LVCMOS33  \
+    -DIRECTION INOUT

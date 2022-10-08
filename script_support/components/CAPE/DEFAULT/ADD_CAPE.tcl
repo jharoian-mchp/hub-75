@@ -15,7 +15,6 @@ set sd_name {B_V_F_BASE_DESIGN}
 #-------------------------------------------------------------------------------
 # Cape pins
 #-------------------------------------------------------------------------------
-sd_create_scalar_port -sd_name ${sd_name} -port_name {P8_13} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {P8_19} -port_direction {OUT}
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {P9_11} -port_direction {IN}
@@ -168,7 +167,6 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:GPIO_IN[16:16]" "BVF_RISCV
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:GPIO_IN[17:17]" "BVF_RISCV_SUBSYSTEM:GPIO_2_F2M_17"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:GPIO_IN[18:18]" "BVF_RISCV_SUBSYSTEM:GPIO_2_F2M_18"}
 
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:P8_13" "P8_13"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:P8_19" "P8_19"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:P9_14" "P9_14"}
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAPE:P9_16" "P9_16"}
