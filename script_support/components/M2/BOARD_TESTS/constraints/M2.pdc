@@ -49,3 +49,8 @@ set_io -port_name H_M2_CLKREQ0N  \
     -pin_name W19                \
     -fixed true                  \
     -DIRECTION OUTPUT
+
+set_io -port_name CSI1_PWND  \
+    -pin_name Y13            \
+    -fixed true              \
+    -DIRECTION OUTPUT

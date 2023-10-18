@@ -13,7 +13,7 @@ create_and_configure_core -core_vlnv {Actel:DirectCore:CoreGPIO:3.2.102} -compon
 "FIXED_CONFIG_6:true"  \
 "FIXED_CONFIG_7:true"  \
 "FIXED_CONFIG_8:true"  \
-"FIXED_CONFIG_9:false"  \
+"FIXED_CONFIG_9:true"  \
 "FIXED_CONFIG_10:false"  \
 "FIXED_CONFIG_11:false"  \
 "FIXED_CONFIG_12:false"  \
@@ -69,7 +69,7 @@ create_and_configure_core -core_vlnv {Actel:DirectCore:CoreGPIO:3.2.102} -compon
 "IO_INT_TYPE_29:7"  \
 "IO_INT_TYPE_30:7"  \
 "IO_INT_TYPE_31:7"  \
-"IO_NUM:9"  \
+"IO_NUM:10"  \
 "IO_TYPE_0:2"  \
 "IO_TYPE_1:2"  \
 "IO_TYPE_2:2"  \
@@ -79,7 +79,7 @@ create_and_configure_core -core_vlnv {Actel:DirectCore:CoreGPIO:3.2.102} -compon
 "IO_TYPE_6:2"  \
 "IO_TYPE_7:2"  \
 "IO_TYPE_8:2"  \
-"IO_TYPE_9:0"  \
+"IO_TYPE_9:2"  \
 "IO_TYPE_10:0"  \
 "IO_TYPE_11:0"  \
 "IO_TYPE_12:0"  \

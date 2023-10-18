@@ -26,6 +26,8 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_UART_CTS} -port_directi
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PERST0n} -port_direction {OUT}
 
+sd_create_scalar_port -sd_name ${sd_name} -port_name {CSI1_PWND} -port_direction {OUT}
+
 #-------------------------------------------------------------------------------
 
 sd_instantiate_component -sd_name ${sd_name} -component_name {M2_INTERFACE} -instance_name {M2_INTERFACE_0} 
@@ -51,6 +53,9 @@ sd_connect_pin_to_port -sd_name ${sd_name} -pin_name {M2_INTERFACE_0:M2_PEWAKEN}
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"M2_INTERFACE_0:M2_UART_RTS" "M2_UART_RTS"} 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"M2_INTERFACE_0:M2_UART_CTS" "M2_UART_CTS"} 
+
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI1_PWND" "M2_INTERFACE_0:CSI_PWND"} 
+sd_invert_pins -sd_name ${sd_name} -pin_names {"CSI1_PWND"} 
 
 #-------------------------------------------------------------------------------
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {BVF_RISCV_SUBSYSTEM:M2_UART_CTS} -value {GND} 
