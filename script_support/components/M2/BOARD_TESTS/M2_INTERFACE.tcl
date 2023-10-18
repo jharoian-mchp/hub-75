@@ -14,6 +14,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {PRESETN} -port_direction {
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {APB_TARGET_PREADY} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {APB_TARGET_PSLVERR} -port_direction {OUT}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {CSI_PWND} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {H_M2_CLKREQ0N} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_I2C_ALTN} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {M2_PERST0n} -port_direction {OUT}
@@ -54,6 +55,7 @@ sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_IN} -pin_
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_IN} -pin_slices {[6:6]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_IN} -pin_slices {[7:7]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_IN} -pin_slices {[8:8]}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_IN} -pin_slices {[9:9]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[0:0]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[1:1]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[2:2]}
@@ -63,12 +65,14 @@ sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[6:6]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[7:7]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[8:8]}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {CoreGPIO_M2_0:GPIO_OUT} -pin_slices {[9:9]}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CoreGPIO_M2_0:INT}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CoreGPIO_M2_0:GPIO_OE}
 
 
 
 # Add scalar net connections
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI_PWND" "CoreGPIO_M2_0:GPIO_IN[9:9]" "CoreGPIO_M2_0:GPIO_OUT[9:9]" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CoreGPIO_M2_0:GPIO_IN[0:0]" "CoreGPIO_M2_0:GPIO_OUT[0:0]" "M2_PERST0n" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CoreGPIO_M2_0:GPIO_IN[1:1]" "CoreGPIO_M2_0:GPIO_OUT[1:1]" "M2_UART_WAKEN" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CoreGPIO_M2_0:GPIO_IN[2:2]" "CoreGPIO_M2_0:GPIO_OUT[2:2]" "M2_W_DISABLE1" }
