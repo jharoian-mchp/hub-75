@@ -129,19 +129,17 @@ set_io -port_name P8_PIN10_USER_LED_7  \
     -RES_PULL None      \
     -DIRECTION INOUT
 
-set_io -port_name P8_PIN11_USER_LED_8	\
+set_io -port_name P8_PIN11	\
     -pin_name Y21	\
     -fixed true	\
-    -OUT_DRIVE 12       \
     -RES_PULL None      \
-    -DIRECTION INOUT
+    -DIRECTION IN
 
-set_io -port_name P8_PIN12_USER_LED_9	\
+set_io -port_name P8_PIN12	\
     -pin_name Y20        \
     -fixed true	\
-    -OUT_DRIVE 12       \
     -RES_PULL None      \
-    -DIRECTION INOUT
+    -DIRECTION IN
 
 set_io -port_name P8_PIN13_USER_LED_10	\
     -pin_name B10	\
@@ -163,16 +161,14 @@ set_io -port_name P8_PIN14_USER_LED_11  \
 set_io -port_name P8_PIN15  \
     -pin_name T12       \
     -fixed true          \
-    -OUT_DRIVE 12       \
     -RES_PULL None      \
-    -DIRECTION INOUT
+    -DIRECTION IN
 
 set_io -port_name P8_PIN16  \
     -pin_name U12        \
     -fixed true          \
-    -OUT_DRIVE 12       \
     -RES_PULL None      \
-    -DIRECTION INOUT
+    -DIRECTION IN
 
 set_io -port_name P8_PIN17  \
     -pin_name W13        \
