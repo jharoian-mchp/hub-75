@@ -24,7 +24,7 @@ The following environment variables are required for the bitstream builder to us
 - LIBERO_INSTALL_DIR
 - LM_LICENSE_FILE
 
-An example script for setting up the environment is available [here](https://git.beagleboard.org/beaglev-fire/Microchip-FPGA-Tools-Setup). 
+An example script for setting up the environment is available [here](https://openbeagle.org/beaglev-fire/Microchip-FPGA-Tools-Setup). 
 
 ## Usage
 

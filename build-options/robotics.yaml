@@ -1,7 +1,7 @@
 ---
 HSS:
     type: git
-    link: https://git.beagleboard.org/beaglev-fire/hart-software-services.git
+    link: https://openbeagle.org/beaglev-fire/hart-software-services.git
     branch: develop-beaglev-fire
     board: bvf
 gateware:

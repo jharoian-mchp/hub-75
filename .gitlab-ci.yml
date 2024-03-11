@@ -19,7 +19,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Cloning the tester and gateware..."
     - export
     - source ~/Microchip/Microchip-FPGA-Tools-Setup/setup-microchip-tools.sh
-    - git clone https://git.beagleboard.org/beaglev-fire/gateware-builds-tester.git
+    - git clone https://openbeagle.org/beaglev-fire/gateware-builds-tester.git
     - cd gateware-builds-tester
     - git clone $REPO_UNDER_TEST -b $BRANCH_UNDER_TEST
     - echo "Building the gateware..."
