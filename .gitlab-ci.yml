@@ -8,18 +8,12 @@ build-job:       # This job runs in the build stage, which runs first.
     - libero-soc-v2023.2
   variables:
     BUILD_OPTIONS_DIRECTORY: "custom-fpga-design"
-    BRANCH_UNDER_TEST: "develop"
+    REPO_UNDER_TEST: $CI_PROJECT_URL
+    BRANCH_UNDER_TEST: $CI_COMMIT_REF_NAME
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop")
+    - if: $CI_PROJECT_ROOT_NAMESPACE == "beaglev-fire"
       variables:
         BUILD_OPTIONS_DIRECTORY: "build-options"
-        REPO_UNDER_TEST: $CI_MERGE_REQUEST_SOURCE_PROJECT_URL
-        BRANCH_UNDER_TEST: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
-    - if: $CI_PIPELINE_SOURCE == "push"
-      variables:
-        BUILD_OPTIONS_DIRECTORY: "custom-fpga-design"
-        REPO_UNDER_TEST: $CI_PROJECT_URL
-        BRANCH_UNDER_TEST: $CI_COMMIT_BRANCH
         
   script:
     - echo "Cloning the tester and gateware..."
@@ -48,22 +42,16 @@ pages:
     - docker-riscv64-ci
   variables:
     BUILD_OPTIONS_DIRECTORY: "custom-fpga-design"
-    BRANCH_UNDER_TEST: "develop"
+    REPO_UNDER_TEST: $CI_PROJECT_URL
+    BRANCH_UNDER_TEST: $CI_COMMIT_REF_NAME
+    DEBIAN_CHANGELOG_PKG: "bbb.io-gateware-my-custom-fpga-design"
+    DEBIAN_SRC: "debian-custom"
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop")
+    - if: $CI_PROJECT_ROOT_NAMESPACE == "beaglev-fire"
       variables:
         BUILD_OPTIONS_DIRECTORY: "build-options"
-        REPO_UNDER_TEST: $CI_MERGE_REQUEST_SOURCE_PROJECT_URL
-        BRANCH_UNDER_TEST: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
         DEBIAN_CHANGELOG_PKG: "bbb.io-gateware"
         DEBIAN_SRC: "debian"
-    - if: $CI_PIPELINE_SOURCE == "push"
-      variables:
-        BUILD_OPTIONS_DIRECTORY: "custom-fpga-design"
-        REPO_UNDER_TEST: $CI_PROJECT_URL
-        BRANCH_UNDER_TEST: $CI_COMMIT_BRANCH
-        DEBIAN_CHANGELOG_PKG: "bbb.io-gateware-my-custom-fpga-design"
-        DEBIAN_SRC: "debian-custom"
   script:
     - rm -rf ./src/ || true
     - mkdir -p ./src/debian/ || true
