@@ -7,5 +7,5 @@ HSS:
 gateware:
     type: sources
     build-args: "CAPE_OPTION:ROBOTICS "
-    unique-design-version: 3.0.3
+    unique-design-version: 3.0.4
 

@@ -7,4 +7,4 @@ HSS:
 gateware:
     type: sources
     build-args: "CAPE_OPTION:GPIOS MIPI_CSI_OPTION:NONE M2_OPTION:BOARD_TESTS SYZYGY_OPTION:BOARD_TESTS_SEEED_STUDIO"
-    unique-design-version: 0.0.2
+    unique-design-version: 0.0.3
