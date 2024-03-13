@@ -4,7 +4,7 @@ import ctypes
 import sys
 import subprocess
 
-from gather_dtso import gather_dtso
+from gateware_scripts.gather_dtso import gather_dtso
 
 global dtbo_info
 

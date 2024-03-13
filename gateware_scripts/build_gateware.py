@@ -44,8 +44,8 @@ import sys
 import subprocess
 import datetime
 
-from generate_gateware_overlays import generate_gateware_overlays
-from logger import Logger
+from gateware_scripts.generate_gateware_overlays import generate_gateware_overlays
+from gateware_scripts.Logger import Logger
 
 
 def exe_sys_cmd(cmd):
@@ -477,9 +477,9 @@ def main():
     work_mss_dir = os.path.join("work", "MSS")
     make_mss_config(mss_configurator, mss_config_file_path, os.path.join(os.getcwd(), work_mss_dir))
 
-#    make_hss(sources["HSS"], yaml_input_file)
+    make_hss(sources["HSS"], yaml_input_file)
 
-#    generate_libero_project(libero, yaml_input_file)
+    generate_libero_project(libero, yaml_input_file)
 
     print("Finished", flush=True)
 

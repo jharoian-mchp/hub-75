@@ -6,10 +6,10 @@ import shutil
 from junit_xml import TestSuite, TestCase
 import yaml
 
-from build_gateware import build_gateware
+from gateware_scripts.build_gateware import build_gateware
 
 
-def get_build_option_file_list(repo_dir_name, build_options_dir_name):
+def get_build_option_file_list(build_options_dir_name):
     build_options_path = os.path.join(os. getcwd(), build_options_dir_name)
     build_option_files = []
     for file in os.listdir(build_options_path):
@@ -18,7 +18,7 @@ def get_build_option_file_list(repo_dir_name, build_options_dir_name):
     return build_option_files
 
 
-def build_bitstreams(repo_dir_name, build_option_files):
+def build_bitstreams(build_option_files):
     tester_top_dir = os.getcwd()
     build_dir = "builds"
     if not os.path.exists(build_dir):
@@ -30,8 +30,6 @@ def build_bitstreams(repo_dir_name, build_option_files):
         print("Build bistream configuration: ", option_build_dir_name)
         cwd = os.getcwd()
         dst_dir = os.path.join(cwd, option_build_dir_name)
-#        shutil.copytree(os.path.join(tester_top_dir, repo_dir_name), dst_dir)
-#        os.chdir(option_build_dir_name)
 
         if not os.path.exists(dst_dir):
             os.makedirs(dst_dir)
@@ -40,12 +38,6 @@ def build_bitstreams(repo_dir_name, build_option_files):
         build_option_path = os.path.join(tester_top_dir, build_option)
 
         build_gateware(build_option_path, dst_dir, tester_top_dir)
-
-
-#        cmd = "python3 ./build-bitstream.py ./" \
-#              + build_option
-#        f = open("build_log.txt", "w")
-#        subprocess.call(cmd, shell=True, stdout=f)
         os.chdir('..')
 
     os.chdir('..')
@@ -153,13 +145,6 @@ def parse_arguments():
     # Initialize parser
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('RepoUnderTest',
-                        type=str,
-                        help="Gateware repository under tests.",
-                        action="store",
-                        default="https://openbeagle.org/beaglev-fire/gateware",
-                        nargs='?')
-
     parser.add_argument('BuildOptionsDir',
                         type=str,
                         help="Directory containing the gateware build options to build.",
@@ -169,18 +154,15 @@ def parse_arguments():
 
     # Read argument(s) from command line
     args = parser.parse_args()
-    repo_under_test = args.RepoUnderTest
     build_options_dir_name = args.BuildOptionsDir
-    return repo_under_test, build_options_dir_name
+    return build_options_dir_name
 
 
-def create_release():
+def create_release(build_options_dir_name):
     print("Test gateware builds.")
-    repo_under_test, build_options_dir_name = parse_arguments()
-    repo_dir_name = repo_under_test.split("/").pop()
-    build_option_files = get_build_option_file_list(repo_dir_name, build_options_dir_name)
+    build_option_files = get_build_option_file_list(build_options_dir_name)
     print("Build bitstreams.")
-    build_bitstreams(repo_dir_name, build_option_files)
+    build_bitstreams(build_option_files)
     print("Gather up artifacts.")
     gather_artifacts(build_option_files)
     print("Create build test report.")
@@ -190,4 +172,5 @@ def create_release():
 
 
 if __name__ == '__main__':
-    create_release()
+    build_options_dir_name = parse_arguments()
+    create_release(build_options_dir_name)

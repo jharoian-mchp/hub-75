@@ -26,52 +26,34 @@
 # The BeagleV Fire Bitstream Builder is an evolution of the Microchip
 # Bitstream Builder available from:
 # https://github.com/polarfire-soc/icicle-kit-minimal-bring-up-design-bitstream-builder
-# 
+#
 
 
 import argparse
-import os
-import sys
 
-import gateware_scripts
-from gateware_scripts.build_gateware import build_gateware
-
-global yaml_input_file
+from gateware_scripts.create_release import create_release
 
 
-# Parse command line arguments and set tool locations
 def parse_arguments():
-    global yaml_input_file
-
     # Initialize parser
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('Path',
-                       metavar='path',
-                       type=str,
-                       help='Path to the YAML file describing the list of sources used to build the bitstream.')
+    parser.add_argument('BuildOptionsDir',
+                        type=str,
+                        help="Directory containing the gateware build options to build.",
+                        action="store",
+                        default="build-options",
+                        nargs='?')
 
-    # Read arguments from command line
+    # Read argument(s) from command line
     args = parser.parse_args()
-    yaml_input_file_arg = args.Path
-
-    if not os.path.isfile(yaml_input_file_arg):
-        print("\r\n!!! The path specified for the YAML input file does not exist !!!\r\n")
-        parser.print_help()
-        sys.exit()
-
-    yaml_input_file = os.path.abspath(yaml_input_file_arg)
+    build_options_dir_name = args.BuildOptionsDir
+    return build_options_dir_name
 
 
 def main():
-    global yaml_input_file
-
-    parse_arguments()
-
-    build_dir = os.getcwd()
-    gateware_top_dir = build_dir
-
-    build_gateware(yaml_input_file, build_dir, gateware_top_dir)
+    build_options_dir_name = parse_arguments()
+    create_release(build_options_dir_name)
 
 
 if __name__ == '__main__':
