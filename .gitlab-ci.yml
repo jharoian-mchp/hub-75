@@ -15,22 +15,22 @@ build-job:       # This job runs in the build stage, which runs first.
       variables:
         BUILD_OPTIONS_DIRECTORY: "build-options"
     - if: $CI_PROJECT_ROOT_NAMESPACE != "beaglev-fire"
+      # Use the default variables' values.
         
   script:
     - export
     - source ~/Microchip/Microchip-FPGA-Tools-Setup/setup-microchip-tools.sh
     - echo "Building the gateware..."
-    - git clone $REPO_UNDER_TEST -b $BRANCH_UNDER_TEST
-    - cd $CI_PROJECT_NAME
+    - git checkout -b $BRANCH_UNDER_TEST
     - python3 create-release.py $BUILD_OPTIONS_DIRECTORY
     - echo "Compile complete."
   artifacts:
     when: on_success
     paths:
-      - $CI_PROJECT_NAME/artifacts/bitstreams
-      - $CI_PROJECT_NAME/artifacts/build_logs
+      - artifacts/bitstreams
+      - artifacts/build_logs
     reports:
-      junit: $CI_PROJECT_NAME/artifacts/tests_report.xml
+      junit: artifacts/tests_report.xml
 
 pages:
   image: robertcnelson/beagle-devscripts-ubuntu-23.04-riscv64:latest
@@ -50,12 +50,14 @@ pages:
         BUILD_OPTIONS_DIRECTORY: "build-options"
         DEBIAN_CHANGELOG_PKG: "bbb.io-gateware"
         DEBIAN_SRC: "debian"
+    - if: $CI_PROJECT_ROOT_NAMESPACE != "beaglev-fire"
+        # Use the default variables' values.
   script:
     - rm -rf ./src/ || true
     - mkdir -p ./src/debian/ || true
     - rsync -av ./$DEBIAN_SRC/* ./src/debian/
     - mkdir -p ./src/gateware-builds-tester || true
-    - rsync -av ./$CI_PROJECT_NAME/* ./src/gateware-builds-tester/
+    - rsync -av ./* ./src/gateware-builds-tester/
     - echo "$DEBIAN_CHANGELOG_PKG (1.$(LANG=C date +%Y%m%d).0-0~lunar) lunar; urgency=low" > ./src/debian/changelog
     - echo "" >> ./src/debian/changelog
     - echo "  * ci build of $CI_PROJECT_URL" >> ./src/debian/changelog
