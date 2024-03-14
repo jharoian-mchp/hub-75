@@ -423,6 +423,7 @@ def build_gateware(yaml_input_file_path, build_dir, gateware_top_dir):
     global programming
 
     log_file_path = os.path.join(build_dir, "build_log.txt")
+    original_stdout = sys.stdout
     sys.stdout = Logger(log_file_path)
 
     set_arguments(yaml_input_file_path)
@@ -448,6 +449,9 @@ def build_gateware(yaml_input_file_path, build_dir, gateware_top_dir):
 
     fpga_design_sources_path = os.path.join(gateware_top_dir, "sources", "FPGA-design")
     generate_libero_project(libero, yaml_input_file, fpga_design_sources_path, build_dir)
+
+    sys.stdout.flush()
+    sys.stdout = original_stdout
 
     print("Finished", flush=True)
 
