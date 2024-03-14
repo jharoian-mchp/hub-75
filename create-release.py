@@ -47,8 +47,7 @@ def parse_arguments():
 
     # Read argument(s) from command line
     args = parser.parse_args()
-    build_options_dir_name = args.BuildOptionsDir
-    return build_options_dir_name
+    return args.BuildOptionsDir
 
 
 def main():

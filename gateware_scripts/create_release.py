@@ -64,10 +64,19 @@ def gather_artifacts(build_option_files):
         option_build_dir_name = os.path.splitext(os.path.basename(build_option))[0]
         os.chdir(root_build_logs_dir)
         cwd = make_chdir(option_build_dir_name)
+
+        # Build log:
         src = os.path.join(root_build_dir, option_build_dir_name, "build_log.txt")
         dst = os.path.join(cwd, "build_log.txt")
         shutil.copy(src, dst)
 
+        # Synthesis logs:
+        src = os.path.join(root_build_dir, option_build_dir_name, "work", "libero", "synthesis")
+        dst = os.path.join(cwd, "synthesis")
+        if os.path.exists(src):
+            shutil.copytree(src, dst)
+
+        # Bitstreams:
         os.chdir(root_bitstreams_dir)
         cwd = make_chdir(option_build_dir_name)
         src = os.path.join(root_build_dir, option_build_dir_name, "bitstream")
@@ -154,8 +163,7 @@ def parse_arguments():
 
     # Read argument(s) from command line
     args = parser.parse_args()
-    build_options_dir_name = args.BuildOptionsDir
-    return build_options_dir_name
+    return args.BuildOptionsDir
 
 
 def create_release(build_options_dir_name):
