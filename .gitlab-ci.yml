@@ -21,7 +21,6 @@ build-job:       # This job runs in the build stage, which runs first.
     - export
     - source ~/Microchip/Microchip-FPGA-Tools-Setup/setup-microchip-tools.sh
     - echo "Building the gateware..."
-    - git checkout -b $BRANCH_UNDER_TEST
     - python3 create-release.py $BUILD_OPTIONS_DIRECTORY
     - echo "Compile complete."
   artifacts:
@@ -57,7 +56,7 @@ pages:
     - mkdir -p ./src/debian/ || true
     - rsync -av ./$DEBIAN_SRC/* ./src/debian/
     - mkdir -p ./src/gateware-builds-tester || true
-    - rsync -av ./* ./src/gateware-builds-tester/
+    - rsync -av ./artifacts ./src/gateware-builds-tester/
     - echo "$DEBIAN_CHANGELOG_PKG (1.$(LANG=C date +%Y%m%d).0-0~lunar) lunar; urgency=low" > ./src/debian/changelog
     - echo "" >> ./src/debian/changelog
     - echo "  * ci build of $CI_PROJECT_URL" >> ./src/debian/changelog
