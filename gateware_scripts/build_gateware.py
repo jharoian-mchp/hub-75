@@ -439,7 +439,8 @@ def build_gateware(yaml_input_file_path, build_dir, gateware_top_dir):
     sources = clone_sources(yaml_input_file)
 
     build_options_list = get_libero_script_args(yaml_input_file)
-    generate_gateware_overlays(os.path.join(os.getcwd(), "bitstream", "LinuxProgramming"), build_options_list)
+    generate_gateware_overlays(os.path.join(gateware_top_dir, "sources", "FPGA-design"),
+                               os.path.join(os.getcwd(), "bitstream", "LinuxProgramming"), build_options_list)
 
     mss_config_file_path = os.path.join(gateware_top_dir, "sources", "MSS_Configuration", "MSS_Configuration.cfg")
     work_mss_dir = os.path.join("work", "MSS")
