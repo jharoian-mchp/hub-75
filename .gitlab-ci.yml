@@ -44,7 +44,7 @@ pages:
     DEBIAN_CHANGELOG_PKG: "bbb.io-gateware-my-custom-fpga-design"
     DEBIAN_SRC: "debian-custom"
   rules:
-    - if: $CI_PROJECT_ROOT_NAMESPACE == "beaglev-fire"
+    - if: $CI_PROJECT_ROOT_NAMESPACE == "beaglev-fire" && ($CI_COMMIT_TAG || $CI_COMMIT_BRANCH == "main")
       variables:
         BUILD_OPTIONS_DIRECTORY: "build-options"
         DEBIAN_CHANGELOG_PKG: "bbb.io-gateware"
