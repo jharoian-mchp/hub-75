@@ -5,6 +5,7 @@ import subprocess
 import shutil
 from junit_xml import TestSuite, TestCase
 import yaml
+from distutils.dir_util import copy_tree
 
 from gateware_scripts.build_gateware import build_gateware
 
@@ -166,9 +167,45 @@ def parse_arguments():
     return args.BuildOptionsDir
 
 
+def adjust_debian_custom(build_options_dir_name, build_option_files):
+    print(build_options_dir_name)
+    print(build_option_files)
+    cwd = os.getcwd()
+    print(cwd)
+    artifacts_dir = os.path.join(os.getcwd(), "artifacts")
+    if not os.path.exists(artifacts_dir):
+        os.makedirs(artifacts_dir)
+    debian_custom_dir = os.path.join(artifacts_dir, "debian-custom")
+    if not os.path.exists(debian_custom_dir):
+        os.makedirs(debian_custom_dir)
+
+    debian_dir = os.path.join(artifacts_dir, "debian")
+    copy_tree("debian", debian_dir)
+    copy_tree("debian-custom", debian_custom_dir)
+
+    gateware_names = []
+    for build_option in build_option_files:
+        if build_option.endswith(".yaml"):
+            gateware_names.append(build_option.strip(".yaml").split(os.sep)[-1])
+
+    debian_custom_path = os.path.join(debian_custom_dir, "bbb.io-gateware-my-custom-fpga-design.install")
+    template_path = os.path.join(cwd, "gateware_scripts", "debian-custom-templates", "bbb.io-gateware-my-custom-fpga-design.install")
+    with open(template_path, 'rt') as f_template:
+        template = f_template.read()
+        full_gateware_file_list = ""
+        for gateware in gateware_names:
+            gateware_file_list = template.replace("<CUSTOM-GATEWARE-NAME>", gateware)
+            print(gateware_file_list)
+            full_gateware_file_list += gateware_file_list
+
+        with open(debian_custom_path, 'wt') as f_debian_custom_gateware:
+            f_debian_custom_gateware.write(full_gateware_file_list)
+
+
 def create_release(build_options_dir_name):
     print("Test gateware builds.")
     build_option_files = get_build_option_file_list(build_options_dir_name)
+    adjust_debian_custom(build_options_dir_name, build_option_files)
     print("Build bitstreams.")
     build_bitstreams(build_option_files)
     print("Gather up artifacts.")

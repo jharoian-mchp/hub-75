@@ -28,6 +28,8 @@ build-job:       # This job runs in the build stage, which runs first.
     paths:
       - artifacts/bitstreams
       - artifacts/build_logs
+      - artifacts/debian
+      - artifacts/debian-custom
     reports:
       junit: artifacts/tests_report.xml
 
@@ -54,7 +56,7 @@ pages:
   script:
     - rm -rf ./src/ || true
     - mkdir -p ./src/debian/ || true
-    - rsync -av ./$DEBIAN_SRC/* ./src/debian/
+    - rsync -av ./artifacts/$DEBIAN_SRC/* ./src/debian/
     - mkdir -p ./src/gateware-builds-tester || true
     - rsync -av ./artifacts ./src/gateware-builds-tester/
     - echo "$DEBIAN_CHANGELOG_PKG (1.$(LANG=C date +%Y%m%d).0-0~lunar) lunar; urgency=low" > ./src/debian/changelog
