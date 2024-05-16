@@ -6,5 +6,5 @@ HSS:
     board: bvf
 gateware:
     type: sources
-    build-args: "M2_OPTION:NONE CAPE_OPTION:VERILOG_TUTORIAL"
+    build-args: "M2_OPTION:NONE CAPE_OPTION:Hub75"
 

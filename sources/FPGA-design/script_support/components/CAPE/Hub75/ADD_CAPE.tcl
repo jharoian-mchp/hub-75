@@ -5,6 +5,9 @@ puts "======== Add cape option: VERILOG_TEMPLATE ========"
 #-------------------------------------------------------------------------------
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/blinky.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/apb_ctrl_status.v}
+import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/H75_TIMING_GENERATOR.v}
+import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/MEM_BLOCK.v}
+import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/H75_MODULE.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/P8_IOPADS.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/P9_11_18_IOPADS.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/P9_21_31_IOPADS.v}
@@ -23,6 +26,9 @@ hdl_core_assign_bif_signal -hdl_core_name {CAPE} -bif_name {BIF_1} -bif_signal_n
 hdl_core_assign_bif_signal -hdl_core_name {CAPE} -bif_name {BIF_1} -bif_signal_name {PRDATA} -core_signal_name {APB_SLAVE_SLAVE_PRDATA} 
 hdl_core_assign_bif_signal -hdl_core_name {CAPE} -bif_name {BIF_1} -bif_signal_name {PWDATA} -core_signal_name {APB_SLAVE_SLAVE_PWDATA} 
 hdl_core_rename_bif -hdl_core_name {CAPE} -current_bif_name {BIF_1} -new_bif_name {APB_TARGET} 
+
+source script_support/components/CAPE/Hub75/PF_TPSRAM_C0.tcl
+source script_support/components/CAPE/Hub75/MEM_BIT_PLANE.tcl
 
 #-------------------------------------------------------------------------------
 # Build the Cape module
