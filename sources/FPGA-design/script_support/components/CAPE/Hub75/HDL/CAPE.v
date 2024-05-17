@@ -496,7 +496,7 @@ H75_MODULE h75_module_0(
     // Latch and output enable signals for the display module
     .plane_oe(led_oe_out),
     .latch_enable(led_latch_out),
-    .led_clk(led_clk),
+    .led_clk(led_clk_out),
     
     // Row and data signals 
     .ABCDE(abcde_out),  
