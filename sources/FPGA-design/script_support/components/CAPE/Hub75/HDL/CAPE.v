@@ -493,8 +493,8 @@ H75_MODULE h75_module_0(
     .clk(divided_clk),
     .resetn(PRESETN),
     
-    .gen_timing(1'b1),                              //apb_ctrl_status_0_control[0]),
-    .pixels_per_row(10'h40),                        //pixels_per_row),
+    .gen_timing(apb_ctrl_status_0_control[0]),                           
+    .pixels_per_row(pixels_per_row),        
     
     // memory interface allowing writes of memory
     .wr_en(mem_wr),
