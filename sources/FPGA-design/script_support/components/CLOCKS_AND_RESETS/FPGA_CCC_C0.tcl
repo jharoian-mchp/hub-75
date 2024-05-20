@@ -2,7 +2,7 @@
 # Family: PolarFireSoC
 # Part Number: MPFS025T-FCVG484E
 # Create and Configure the core component FPGA_CCC_C0
-create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FPGA_CCC_C0} -params {\
+create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_name {FPGA_CCC_C0} -params {\
 "DLL_CLK_0_BANKCLK_EN:false"  \
 "DLL_CLK_0_DEDICATED_EN:false"  \
 "DLL_CLK_0_FABCLK_EN:false"  \
@@ -39,7 +39,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FP
 "GL0_0_BYPASS:0"  \
 "GL0_0_BYPASS_EN:false"  \
 "GL0_0_DEDICATED_USED:false"  \
-"GL0_0_DIV:6"  \
+"GL0_0_DIV:10"  \
 "GL0_0_DIVSTART:0"  \
 "GL0_0_DYNAMIC_PH:false"  \
 "GL0_0_EXPOSE_EN:false"  \
@@ -70,7 +70,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FP
 "GL1_0_BYPASS:0"  \
 "GL1_0_BYPASS_EN:false"  \
 "GL1_0_DEDICATED_USED:false"  \
-"GL1_0_DIV:5"  \
+"GL1_0_DIV:10"  \
 "GL1_0_DIVSTART:0"  \
 "GL1_0_DYNAMIC_PH:false"  \
 "GL1_0_EXPOSE_EN:false"  \
@@ -101,7 +101,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FP
 "GL2_0_BYPASS:0"  \
 "GL2_0_BYPASS_EN:false"  \
 "GL2_0_DEDICATED_USED:false"  \
-"GL2_0_DIV:5"  \
+"GL2_0_DIV:10"  \
 "GL2_0_DIVSTART:0"  \
 "GL2_0_DYNAMIC_PH:false"  \
 "GL2_0_EXPOSE_EN:false"  \
@@ -132,7 +132,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FP
 "GL3_0_BYPASS:0"  \
 "GL3_0_BYPASS_EN:false"  \
 "GL3_0_DEDICATED_USED:false"  \
-"GL3_0_DIV:10"  \
+"GL3_0_DIV:21"  \
 "GL3_0_DIVSTART:0"  \
 "GL3_0_DYNAMIC_PH:false"  \
 "GL3_0_EXPOSE_EN:false"  \
@@ -140,7 +140,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:*} -component_name {FP
 "GL3_0_FABCLK_USED:true"  \
 "GL3_0_FREQ_SEL:false"  \
 "GL3_0_IS_USED:true"  \
-"GL3_0_OUT_FREQ:50"  \
+"GL3_0_OUT_FREQ:60"  \
 "GL3_0_PHASE_INDEX:0"  \
 "GL3_0_PHASE_SEL:false"  \
 "GL3_0_PLL_PHASE:0"  \
