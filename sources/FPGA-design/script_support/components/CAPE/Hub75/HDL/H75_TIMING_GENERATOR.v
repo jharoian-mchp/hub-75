@@ -46,7 +46,6 @@ localparam TARGET_FREQ_HZ = 50;         // Target frame rate
 localparam CYCLES_PER_HALF_PERIOD = 416667; // $ceil(1.0 / ((CLOCK__PERIOD_NS * 1.0e-9) * 2.0 * TARGET_FREQ_HZ));
 
 // counters and registers for timing
-reg [23:0]      frame_counter;              // timing of frames
 reg [19:0]      plane_counter;              // used for timing of ON time for planes
 reg [5:0]       plane_bcm;                  // BCM weighting for current plane
 reg [23:0]      delay_counter;              // general purpose counter used in sequential steps
@@ -65,6 +64,7 @@ localparam S_IDLE = 0, S_START_DELAY = 1, S_START_PLANE = 2, S_INC_X1 = 3, S_INC
     S_INC_X5 = 7, S_LATCH1 = 8, S_LATCH2 = 9, S_OE = 10, S_INC_ROW = 11, S_ADV_PLANE = 12, S_WAIT_FRAMESYNCN = 13;
 reg [3:0] timing_state;
 
+// the led_clk to the panels
 always @(clk or rd_valid)
 begin
     if (rd_valid == 1'b1) begin
@@ -77,7 +77,6 @@ end
 always @(posedge clk or negedge resetn)
 begin
     if (resetn == 1'b0) begin
-        frame_counter <= 0;
         frame_sync <= 1'b0;
         plane_oe <= 1'b0;
         plane_counter <= 0;
@@ -88,15 +87,8 @@ begin
         ABCDE <= 5'b00000;
         timing_state <= S_IDLE;
     end else begin
-        if (gen_timing == 1'b1) begin
-            if (frame_counter == CYCLES_PER_HALF_PERIOD - 1) begin
-                frame_counter <= 0;
-                frame_sync <= ~frame_sync;
-            end else begin
-                frame_counter <= frame_counter + 1;
-            end
-        end    
     
+        // decrement plane_counter used during BCM
         if (plane_oe == 1'b1) begin
             if (plane_counter == 0) begin
                 plane_oe <= 1'b0;
@@ -109,10 +101,10 @@ begin
             S_IDLE:
                 begin
                     rd_valid <= 1'b0;
-                    // idle state waiting for frame sync
-                    if (frame_sync == 1'b1) begin
-                        ABCDE <= 5'b00000;
-                        plane_oe <= 1'b0;
+                    // idle state waiting for previous plane_oe to finish
+                    if ((plane_oe == 1'b0) && (gen_timing == 1'b1)) begin
+                        // start the next frame
+                        frame_sync <= 1'b1;
                         latch_enable <= 1'b0;
                         delay_counter <= FRAME_START_DELAY;
                         timing_state <= S_START_DELAY;
@@ -123,6 +115,7 @@ begin
                     rd_valid <= 1'b0;
                     // short delay after beginning of frame
                     if (delay_counter == 0) begin
+                        frame_sync <= 1'b0;
                         plane <= 7;
                         timing_state <= S_START_PLANE;
                     end else begin
@@ -188,7 +181,9 @@ begin
                     rd_valid <= 1'b0;
                     plane_oe <= 1'b1;
                     // calculate bcm weighted delay time
-                    plane_counter <= plane_bcm[5:0] * 400; //{ 10'b00_0000_0000, plane_bcm[5:0], 8'b0000_0000};
+                    // for 6 screens the time needs to be around 400 clocks.. hence the calculation (PPR * 6)
+                    // this will allow sufficient output time for bit plane 2 and bit plane 7
+                    plane_counter <= plane_bcm[5:0] * (pixels_per_row + 6);
                     timing_state <= S_INC_ROW;
                 end
             S_INC_ROW:
@@ -214,12 +209,13 @@ begin
                     end
                 end                
             S_WAIT_FRAMESYNCN:
+                // this is a legacy state from when fixed frame timing was used
+                // it used to wait for frame_sync to be 0 before allowing a restart
+                // (when rising edge of frame_sync was next seen)
                 begin
                     rd_valid <= 1'b0;
                     latch_enable <= 1'b0;
-                    if (frame_sync == 1'b0) begin
-                        timing_state <= S_IDLE;
-                    end
+                    timing_state <= S_IDLE;
                 end
             default:
                 begin
