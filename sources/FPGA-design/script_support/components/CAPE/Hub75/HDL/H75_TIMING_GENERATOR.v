@@ -22,7 +22,7 @@ module H75_TIMING_GENERATOR(
     input               clk,
     input               resetn,
     input               gen_timing,
-    input [8:0]         pixels_per_row,
+    input [9:0]         pixels_per_row,
     
     // internal signals and diagnostics
     output reg          frame_sync,

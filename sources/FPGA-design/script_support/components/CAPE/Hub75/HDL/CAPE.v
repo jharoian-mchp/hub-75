@@ -299,7 +299,7 @@ wire [4:0]  abcde_out;
 wire        mem_wr;
 wire [31:0] mem_data;
 wire [14:0] mem_waddr;
-wire [8:0]  pixels_per_row;
+wire [9:0]  pixels_per_row;
 wire        frame_sync_out;
 wire        rd_valid_out;
 
@@ -494,7 +494,7 @@ H75_MODULE h75_module_0(
     .resetn(PRESETN),
     
     .gen_timing(1'b1),                              //apb_ctrl_status_0_control[0]),
-    .pixels_per_row(9'h40),                         //pixels_per_row),
+    .pixels_per_row(10'h40),                        //pixels_per_row),
     
     // memory interface allowing writes of memory
     .wr_en(mem_wr),

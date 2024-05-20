@@ -23,12 +23,12 @@ module H75_MODULE(
     input           resetn,
     
     input           gen_timing,         // control generation of timing signals
-    input [8:0]     pixels_per_row,     // number of pixels per row
+    input [9:0]     pixels_per_row,     // number of pixels per row
     
     // memory interface allowing APB writes to framebuffer memory
     input           wr_en,
     input [14:0]    wr_addr,
-    input [31:0]    wr_data,
+    input [15:0]    wr_data,
     
     // output and output enables signals for the display module
     output wire     plane_oe,
@@ -49,9 +49,6 @@ module H75_MODULE(
     output wire     rd_valid
 );
 
-//localparam DEFAULT_ROW_LENGTH = 16;
-//reg [8:0] PIXELS_PER_ROW;
-
 wire PLANE_OE_int;
 wire [2:0] PLANE_int;
 wire LATCH_ENABLE_int;
@@ -71,7 +68,6 @@ assign rd_valid = RD_VALID_int;
 always @(posedge clk) begin
     if (resetn == 1'b0) begin
         // reset module
-//        PIXELS_PER_ROW <= DEFAULT_ROW_LENGTH;
     end else begin
     end
 end
@@ -100,7 +96,7 @@ MEM_BLOCK mem_block_0 (
     
     .wr_en(wr_en),
     .wr_addr(wr_addr),
-    .wr_data(wr_data[15:0]),
+    .wr_data(wr_data),
     .rd_addr(RD_ADDR_int),
     .rd_bit_plane(PLANE_int),
     
