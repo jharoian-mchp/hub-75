@@ -33,7 +33,7 @@ module H75_MODULE(
     // output and output enables signals for the display module
     output wire     plane_oe,
     output wire     latch_enable,
-    output reg      led_clk,
+    output wire     led_clk,
     
     // row and data signals
     output wire [4:0]   ABCDE,
@@ -49,7 +49,7 @@ module H75_MODULE(
     output wire     rd_valid
 );
 
-//localparam DEFAULT_ROW_LENGTH = 64;
+//localparam DEFAULT_ROW_LENGTH = 16;
 //reg [8:0] PIXELS_PER_ROW;
 
 wire PLANE_OE_int;
@@ -71,7 +71,7 @@ assign rd_valid = RD_VALID_int;
 always @(posedge clk) begin
     if (resetn == 1'b0) begin
         // reset module
-        //PIXELS_PER_ROW <= DEFAULT_ROW_LENGTH;
+//        PIXELS_PER_ROW <= DEFAULT_ROW_LENGTH;
     end else begin
     end
 end
@@ -89,9 +89,8 @@ H75_TIMING_GENERATOR timing_gen_0 (
     .latch_enable(LATCH_ENABLE_int),
     .rd_addr(RD_ADDR_int),
     .led_clk(LED_CLK_int),
-    .ABCDE(ABCDE_int),
-    
-    .R_VALID(RD_VALID_int)
+    .ABCDE(ABCDE_int),    
+    .rd_valid(RD_VALID_int)
 );
 
 // instantiate the memory block

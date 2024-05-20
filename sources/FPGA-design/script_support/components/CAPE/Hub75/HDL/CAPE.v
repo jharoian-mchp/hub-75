@@ -300,6 +300,14 @@ wire        mem_wr;
 wire [31:0] mem_data;
 wire [14:0] mem_waddr;
 wire [8:0]  pixels_per_row;
+wire        frame_sync_out;
+wire        rd_valid_out;
+
+reg divided_clk;
+
+always @(posedge PCLK) begin
+        divided_clk <= ~divided_clk;
+end
 
 //--------------------------------------------------------------------
 // Constant assignments
@@ -333,12 +341,12 @@ assign GPIO_IN_slice_0 = GPIO_IN_net_2[46:31];
 //--------------------------------------------------------------------
 // Concatenation assignments
 //--------------------------------------------------------------------
-assign GPIO_OE_net_0 = { 16'hFFFF, GPIO_OE[27:6], 1'b1, GPIO_OE[4:0] };
+assign GPIO_OE_net_0 = { 16'hFFFF, GPIO_OE[27:6], 1'b1, GPIO_OE[4:3], 3'b111 };
 assign GPIO_OUT_net_0 = { 1'b0, led_oe_out, led_latch_out, led_clk_out,
                           abcde_out[3], abcde_out[2], abcde_out[1], abcde_out[0],
                           abcde_out[4], b1_out, g1_out, r1_out,
                           1'b0, b0_out, g0_out, r0_out,
-                          GPIO_OUT[27:6], BLINK, GPIO_OUT[4:0] };
+                          GPIO_OUT[27:6], BLINK, GPIO_OUT[4:3], rd_valid_out, led_clk_out, frame_sync_out};
                           
 //--------------------------------------------------------------------
 // Bus Interface Nets Assignments - Unequal Pin Widths
@@ -482,11 +490,11 @@ blinky blinky_0(                //
         );
 
 H75_MODULE h75_module_0(
-    .clk(PCLK),
+    .clk(divided_clk),
     .resetn(PRESETN),
     
-    .gen_timing(apb_ctrl_status_0_control[0]),
-    .pixels_per_row(pixels_per_row),
+    .gen_timing(1'b1),                              //apb_ctrl_status_0_control[0]),
+    .pixels_per_row(9'h40),                         //pixels_per_row),
     
     // memory interface allowing writes of memory
     .wr_en(mem_wr),
@@ -505,10 +513,11 @@ H75_MODULE h75_module_0(
     .b0(b0_out),
     .r1(r1_out), 
     .g1(g1_out), 
-    .b1(b1_out)
+    .b1(b1_out),
     
-    //.frame_sync()
-    //.rd_valid()
+    .frame_sync(frame_sync_out),
+    .rd_valid(rd_valid_out)
 );
+
 
 endmodule

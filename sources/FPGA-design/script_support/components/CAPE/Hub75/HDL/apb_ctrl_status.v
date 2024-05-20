@@ -41,7 +41,7 @@ module apb_ctrl_status(
             control <= DEFAULT_CONTROL;
             pixels_per_row <= DEFAULT_PIXELS_PER_ROW;
         end else begin
-            case (paddr[15:0])
+            case (paddr[17:2])
                 STATUS:
                     begin
                         if (rd_enable) begin
@@ -72,7 +72,7 @@ module apb_ctrl_status(
                         mem_wr_0 <= wr_enable;
                         mem_wr <= mem_wr_0;
                         mem_data <= pwdata;
-                        mem_waddr <= paddr[14:0];
+                        mem_waddr <= paddr[16:2];
                         prdata <= 32'b0;
                     end
             endcase
