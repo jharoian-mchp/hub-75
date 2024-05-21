@@ -33,9 +33,7 @@ module apb_ctrl_status(
    
     output reg          mem_wr,
     output reg [15:0]   mem_data,
-    output reg [14:0]   mem_waddr,
-    
-    output [15:0]       DIAG_ADDR
+    output reg [14:0]   mem_waddr
 );
 
     // addresses of the control/status registers (in 32bit multiples)
@@ -50,11 +48,10 @@ module apb_ctrl_status(
     reg [9:0] ppr_value;
     
     reg mem_wr_0;
-    wire [15:0] mem_word_addr = paddr[17:2];                // extract the word address (32bit words)
+    //wire [15:0] mem_word_addr = paddr[17:2];                // extract the word address (32bit words)
     wire rd_enable;
     wire wr_enable;
 
-    assign DIAG_ADDR = mem_word_addr;
     assign wr_enable = (penable && pwrite && psel);
     assign rd_enable = (!pwrite && psel);
 
@@ -72,7 +69,7 @@ module apb_ctrl_status(
             mem_wr_0 <= 1'b0;
             
         end else begin
-            case (mem_word_addr)
+            case (paddr[17:2])
                 STATUS:
                     begin
                         if (rd_enable) begin
@@ -100,11 +97,10 @@ module apb_ctrl_status(
                 default:
                     begin
                         // anything else is assumed to be a write to frame buffer memory
-                        mem_wr_0 <= wr_enable;
-                        mem_wr <= mem_wr_0;
+                        mem_wr <= wr_enable;
                         // extract the bits forming RGB565 from the 32bit ABGR input
                         mem_data <= {pwdata[23:19],pwdata[15:10],pwdata[7:3]};
-                        mem_waddr <= mem_word_addr[14:0];
+                        mem_waddr <= paddr[16:2];
                         prdata <= 32'b0;
                     end
             endcase

@@ -140,7 +140,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL3_0_FABCLK_USED:true"  \
 "GL3_0_FREQ_SEL:false"  \
 "GL3_0_IS_USED:true"  \
-"GL3_0_OUT_FREQ:60"  \
+"GL3_0_OUT_FREQ:30"  \
 "GL3_0_PHASE_INDEX:0"  \
 "GL3_0_PHASE_SEL:false"  \
 "GL3_0_PLL_PHASE:0"  \

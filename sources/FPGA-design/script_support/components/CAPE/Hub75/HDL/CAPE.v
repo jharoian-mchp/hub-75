@@ -280,8 +280,8 @@ wire   [42:41] GPIO_OUT_const_net_3;
 // Bus Interface Nets Declarations - Unequal Pin Widths
 //--------------------------------------------------------------------
 wire   [31:0]  APB_SLAVE_SLAVE_PADDR;
-wire   [15:0]  APB_SLAVE_SLAVE_PADDR_0;
-wire   [15:0]  APB_SLAVE_SLAVE_PADDR_0_15to0;
+wire   [17:0]  APB_SLAVE_SLAVE_PADDR_0;
+wire   [17:0]  APB_SLAVE_SLAVE_PADDR_0_17to0;
 
 //--------------------------------------------------------------------
 // HUB75
@@ -346,13 +346,13 @@ assign GPIO_OUT_net_0 = { 1'b0, led_oe_out, led_latch_out, led_clk_out,
                           abcde_out[3], abcde_out[2], abcde_out[1], abcde_out[0],
                           abcde_out[4], b1_out, g1_out, r1_out,
                           1'b0, b0_out, g0_out, r0_out,
-                          GPIO_OUT[27:6], BLINK, GPIO_OUT[4:3], rd_valid_out, led_clk_out, frame_sync_out};
-                          
+                          GPIO_OUT[27:6], BLINK, GPIO_OUT[4:3], mem_wr, led_clk_out, frame_sync_out};
+
 //--------------------------------------------------------------------
 // Bus Interface Nets Assignments - Unequal Pin Widths
 //--------------------------------------------------------------------
-assign APB_SLAVE_SLAVE_PADDR_0 = { APB_SLAVE_SLAVE_PADDR_0_15to0 };
-assign APB_SLAVE_SLAVE_PADDR_0_15to0 = APB_SLAVE_SLAVE_PADDR[15:0];
+assign APB_SLAVE_SLAVE_PADDR_0 = { APB_SLAVE_SLAVE_PADDR_0_17to0 };
+assign APB_SLAVE_SLAVE_PADDR_0_17to0 = APB_SLAVE_SLAVE_PADDR[17:0];
 
 //--------------------------------------------------------------------
 // Component instances
@@ -490,7 +490,7 @@ blinky blinky_0(                //
         );
 
 H75_MODULE h75_module_0(
-    .clk(divided_clk),
+    .clk(PCLK),
     .resetn(PRESETN),
     
     .gen_timing(apb_ctrl_status_0_control[0]),                           
