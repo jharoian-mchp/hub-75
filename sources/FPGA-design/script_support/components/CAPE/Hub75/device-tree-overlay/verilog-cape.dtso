@@ -16,7 +16,7 @@
 
 		cape_gpios_p8: gpio@41100000 {
 			compatible = "microchip,core-gpio";
-			reg = <0x0 0x41100000 0x0 0x1000>;
+			reg = <0x0 0x41100000 0x0 0x00040000>;
 			clocks = <&fabric_clk3>;
 			gpio-controller;
 			#gpio-cells = <2>;
