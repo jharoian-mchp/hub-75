@@ -39,11 +39,7 @@ module H75_TIMING_GENERATOR(
 localparam NUM_ROWS = 32;               // number of rows to output
 localparam BCM_FACTOR = 400;            // multiplier for bit plane position and time
 localparam FRAME_START_DELAY = 10;      // delay from start of frame sync to first OE for most significant bit plane
-localparam INTER_PLANE_DELAY = 20;
-localparam LATCH_ENABLE_DELAY = 2;      // delay around latch timing
 localparam CLOCK__PERIOD_NS = 20;       // 20ns system clock going to the CAPE
-localparam TARGET_FREQ_HZ = 50;         // Target frame rate
-localparam CYCLES_PER_HALF_PERIOD = 416667; // $ceil(1.0 / ((CLOCK__PERIOD_NS * 1.0e-9) * 2.0 * TARGET_FREQ_HZ));
 
 // counters and registers for timing
 reg [19:0]      plane_counter;              // used for timing of ON time for planes
@@ -112,7 +108,7 @@ begin
                 end
             S_START_DELAY:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     // short delay after beginning of frame
                     if (delay_counter == 0) begin
                         frame_sync <= 1'b0;
@@ -131,7 +127,7 @@ begin
                 end
             S_INC_X1:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     plane_x <= plane_x + 1;
                     timing_state <= S_INC_X2;
                 end
@@ -152,7 +148,7 @@ begin
                 end
             S_INC_X4:
                 begin
-                    rd_valid <= 1'b1;
+                    //rd_valid <= 1'b1;
                     timing_state <= S_INC_X5;
                 end
             S_INC_X5:
@@ -166,19 +162,19 @@ begin
                 end
             S_LATCH1:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b1;
                     timing_state <= S_LATCH2;
                 end
             S_LATCH2:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b0;
                     timing_state <= S_OE;
                 end
             S_OE:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     plane_oe <= 1'b1;
                     // calculate bcm weighted delay time
                     // for 6 screens the time needs to be around 400 clocks.. hence the calculation (PPR * 6)
@@ -188,7 +184,7 @@ begin
                 end
             S_INC_ROW:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     if (plane_y == (NUM_ROWS - 1)) begin
                         timing_state <= S_ADV_PLANE;
                     end else begin
@@ -199,7 +195,7 @@ begin
                 end
             S_ADV_PLANE:
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     // go to the next plane
                     if (plane == 2) begin
                             timing_state <= S_WAIT_FRAMESYNCN;
@@ -213,7 +209,7 @@ begin
                 // it used to wait for frame_sync to be 0 before allowing a restart
                 // (when rising edge of frame_sync was next seen)
                 begin
-                    rd_valid <= 1'b0;
+                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b0;
                     timing_state <= S_IDLE;
                 end
