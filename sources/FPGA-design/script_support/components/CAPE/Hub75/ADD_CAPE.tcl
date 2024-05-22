@@ -32,6 +32,8 @@ hdl_core_rename_bif -hdl_core_name {CAPE} -current_bif_name {BIF_1} -new_bif_nam
 #source script_support/components/CAPE/Hub75/MEM_BIT_PLANE.tcl
 source script_support/components/CAPE/Hub75/PF_DPSRAM_C0.tcl
 source script_support/components/CAPE/Hub75/MEM_BIT_PLANE2.tcl
+source script_support/components/CAPE/Hub75/PF_CCC_C0.tcl
+source script_support/components/CAPE/Hub75/LED_CCC.tcl
 
 #-------------------------------------------------------------------------------
 # Build the Cape module

@@ -19,7 +19,8 @@
 `timescale 1ns / 100ps
 
 module H75_MODULE(
-    input           clk,
+    input           clk,                // 50MHz clock for memory side interface
+    input           led_clk_in,         // 30MHz for LED interface
     input           resetn,
     
     input           gen_timing,         // control generation of timing signals
@@ -34,7 +35,7 @@ module H75_MODULE(
     // output and output enables signals for the display module
     output wire     plane_oe,
     output wire     latch_enable,
-    output wire     led_clk,
+    output wire     led_clk_out,
     
     // row and data signals
     output wire [4:0]   ABCDE,
@@ -63,7 +64,7 @@ assign plane_oe = PLANE_OE_int;
 assign latch_enable = LATCH_ENABLE_int;
 assign ABCDE = ABCDE_int;
 assign frame_sync = FRAME_SYNC_int;
-assign led_clk = LED_CLK_int;
+assign led_clk_out = LED_CLK_int;
 assign rd_valid = RD_VALID_int;
 
 always @(posedge clk) begin
@@ -75,7 +76,7 @@ end
 
 // instantiate the timing block
 H75_TIMING_GENERATOR timing_gen_0 (
-    .clk(clk),
+    .clk(led_clk_in),
     .resetn(resetn),
     .gen_timing(gen_timing),
     .pixels_per_row(pixels_per_row), 
@@ -94,6 +95,7 @@ H75_TIMING_GENERATOR timing_gen_0 (
 // instantiate the memory block
 MEM_BLOCK mem_block_0 (
     .clk(clk),
+    .led_clk(led_clk_in),
     .resetn(resetn),
     
     .wr_en(wr_en),

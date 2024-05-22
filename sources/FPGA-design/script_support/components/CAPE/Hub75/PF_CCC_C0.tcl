@@ -1,8 +1,8 @@
-# Exporting Component Description of FPGA_CCC_C0 to TCL
+# Exporting Component Description of PF_CCC_C0 to TCL
 # Family: PolarFireSoC
 # Part Number: MPFS025T-FCVG484E
-# Create and Configure the core component FPGA_CCC_C0
-create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_name {FPGA_CCC_C0} -params {\
+# Create and Configure the core component PF_CCC_C0
+create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_name {PF_CCC_C0} -params {\
 "DLL_CLK_0_BANKCLK_EN:false"  \
 "DLL_CLK_0_DEDICATED_EN:false"  \
 "DLL_CLK_0_FABCLK_EN:false"  \
@@ -39,7 +39,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL0_0_BYPASS:0"  \
 "GL0_0_BYPASS_EN:false"  \
 "GL0_0_DEDICATED_USED:false"  \
-"GL0_0_DIV:6"  \
+"GL0_0_DIV:12"  \
 "GL0_0_DIVSTART:0"  \
 "GL0_0_DYNAMIC_PH:false"  \
 "GL0_0_EXPOSE_EN:false"  \
@@ -47,7 +47,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL0_0_FABCLK_USED:true"  \
 "GL0_0_FREQ_SEL:false"  \
 "GL0_0_IS_USED:true"  \
-"GL0_0_OUT_FREQ:125"  \
+"GL0_0_OUT_FREQ:30"  \
 "GL0_0_PHASE_INDEX:0"  \
 "GL0_0_PHASE_SEL:false"  \
 "GL0_0_PLL_PHASE:0"  \
@@ -70,15 +70,15 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL1_0_BYPASS:0"  \
 "GL1_0_BYPASS_EN:false"  \
 "GL1_0_DEDICATED_USED:false"  \
-"GL1_0_DIV:6"  \
+"GL1_0_DIV:1"  \
 "GL1_0_DIVSTART:0"  \
 "GL1_0_DYNAMIC_PH:false"  \
 "GL1_0_EXPOSE_EN:false"  \
 "GL1_0_FABCLK_GATED_USED:false"  \
 "GL1_0_FABCLK_USED:true"  \
 "GL1_0_FREQ_SEL:false"  \
-"GL1_0_IS_USED:true"  \
-"GL1_0_OUT_FREQ:125"  \
+"GL1_0_IS_USED:false"  \
+"GL1_0_OUT_FREQ:100"  \
 "GL1_0_PHASE_INDEX:0"  \
 "GL1_0_PHASE_SEL:false"  \
 "GL1_0_PLL_PHASE:0"  \
@@ -101,15 +101,15 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL2_0_BYPASS:0"  \
 "GL2_0_BYPASS_EN:false"  \
 "GL2_0_DEDICATED_USED:false"  \
-"GL2_0_DIV:6"  \
+"GL2_0_DIV:1"  \
 "GL2_0_DIVSTART:0"  \
 "GL2_0_DYNAMIC_PH:false"  \
 "GL2_0_EXPOSE_EN:false"  \
 "GL2_0_FABCLK_GATED_USED:false"  \
 "GL2_0_FABCLK_USED:true"  \
 "GL2_0_FREQ_SEL:false"  \
-"GL2_0_IS_USED:true"  \
-"GL2_0_OUT_FREQ:125"  \
+"GL2_0_IS_USED:false"  \
+"GL2_0_OUT_FREQ:100"  \
 "GL2_0_PHASE_INDEX:0"  \
 "GL2_0_PHASE_SEL:false"  \
 "GL2_0_PLL_PHASE:0"  \
@@ -132,15 +132,15 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL3_0_BYPASS:0"  \
 "GL3_0_BYPASS_EN:false"  \
 "GL3_0_DEDICATED_USED:false"  \
-"GL3_0_DIV:25"  \
+"GL3_0_DIV:1"  \
 "GL3_0_DIVSTART:0"  \
 "GL3_0_DYNAMIC_PH:false"  \
 "GL3_0_EXPOSE_EN:false"  \
 "GL3_0_FABCLK_GATED_USED:false"  \
 "GL3_0_FABCLK_USED:true"  \
 "GL3_0_FREQ_SEL:false"  \
-"GL3_0_IS_USED:true"  \
-"GL3_0_OUT_FREQ:50"  \
+"GL3_0_IS_USED:false"  \
+"GL3_0_OUT_FREQ:100"  \
 "GL3_0_PHASE_INDEX:0"  \
 "GL3_0_PHASE_SEL:false"  \
 "GL3_0_PLL_PHASE:0"  \
@@ -214,12 +214,12 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "PLL_FB_CLK_1:GL0_1"  \
 "PLL_FEEDBACK_MODE_0:Post-VCO"  \
 "PLL_FEEDBACK_MODE_1:Post-VCO"  \
-"PLL_IN_FREQ_0:160"  \
+"PLL_IN_FREQ_0:50"  \
 "PLL_IN_FREQ_1:100"  \
 "PLL_INT_MODE_EN_0:false"  \
 "PLL_INT_MODE_EN_1:false"  \
-"PLL_LOCK_COUNT_0:0"  \
-"PLL_LOCK_COUNT_1:0"  \
+"PLL_LOCK_COUNT_0:8"  \
+"PLL_LOCK_COUNT_1:8"  \
 "PLL_LP_REQUIRES_LOCK_EN_0:false"  \
 "PLL_LP_REQUIRES_LOCK_EN_1:false"  \
 "PLL_PLL_CASCADED_EN:false"  \
@@ -227,7 +227,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "PLL_POSTDIVIDERADDSOFTLOGIC_0:true"  \
 "PLL_REF_CLK_SEL_0:false"  \
 "PLL_REF_CLK_SEL_1:false"  \
-"PLL_REFDIV_0:4"  \
+"PLL_REFDIV_0:1"  \
 "PLL_REFDIV_1:1"  \
 "PLL_RESET_ON_LOCK_0:true"  \
 "PLL_SPREAD_MODE_0:false"  \
@@ -246,4 +246,4 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "PLL_SYNC_EN:false"  \
 "PLL_VCO_MODE_0:MIN_JITTER"  \
 "PLL_VCO_MODE_1:MIN_JITTER"   }
-# Exporting Component Description of FPGA_CCC_C0 to TCL done
+# Exporting Component Description of PF_CCC_C0 to TCL done

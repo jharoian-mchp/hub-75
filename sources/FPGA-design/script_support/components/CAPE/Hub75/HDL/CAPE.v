@@ -303,12 +303,7 @@ wire [9:0]  pixels_per_row;
 wire [11:0] BCM_count[0:5];
 wire        frame_sync_out;
 wire        rd_valid_out;
-
-reg divided_clk;
-
-always @(posedge PCLK) begin
-        divided_clk <= ~divided_clk;
-end
+wire        LED_CLK;
 
 //--------------------------------------------------------------------
 // Constant assignments
@@ -491,8 +486,16 @@ blinky blinky_0(                //
         .blink   ( BLINK )      //
         );
 
+// LED clock generation
+LED_CCC led_ccc_0(
+    .clk(PCLK),
+    .led_clk(LED_CLK)
+);
+
+//HUB75 driver module
 H75_MODULE h75_module_0(
     .clk(PCLK),
+    .led_clk_in(LED_CLK),
     .resetn(PRESETN),
     
     // control inputs
@@ -508,7 +511,7 @@ H75_MODULE h75_module_0(
     // Latch and output enable signals for the display module
     .plane_oe(led_oe_out),
     .latch_enable(led_latch_out),
-    .led_clk(led_clk_out),
+    .led_clk_out(led_clk_out),
     
     // Row and data signals 
     .ABCDE(abcde_out),  

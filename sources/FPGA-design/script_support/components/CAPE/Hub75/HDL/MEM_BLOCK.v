@@ -28,6 +28,7 @@
 
 module MEM_BLOCK(
     input           clk,
+    input           led_clk,
     input           resetn,
     
     input           wr_en,
@@ -85,7 +86,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_red[upper_red_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
@@ -104,7 +105,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_green[upper_green_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
@@ -123,7 +124,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_blue[upper_blue_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
@@ -145,7 +146,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_red[lower_red_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
@@ -164,7 +165,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_green[lower_green_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
@@ -183,7 +184,7 @@ generate
             .addr_a(wr_addr[13:0]),
             .w_data_a(wr_blue[lower_blue_idx]),
             
-            .clk_b(clk),
+            .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),
             .w_data_b(1'b0),
