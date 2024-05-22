@@ -27,8 +27,11 @@ hdl_core_assign_bif_signal -hdl_core_name {CAPE} -bif_name {BIF_1} -bif_signal_n
 hdl_core_assign_bif_signal -hdl_core_name {CAPE} -bif_name {BIF_1} -bif_signal_name {PWDATA} -core_signal_name {APB_SLAVE_SLAVE_PWDATA} 
 hdl_core_rename_bif -hdl_core_name {CAPE} -current_bif_name {BIF_1} -new_bif_name {APB_TARGET} 
 
-source script_support/components/CAPE/Hub75/PF_TPSRAM_C0.tcl
-source script_support/components/CAPE/Hub75/MEM_BIT_PLANE.tcl
+# TPRAM configuration
+#source script_support/components/CAPE/Hub75/PF_TPSRAM_C0.tcl
+#source script_support/components/CAPE/Hub75/MEM_BIT_PLANE.tcl
+source script_support/components/CAPE/Hub75/PF_DPSRAM_C0.tcl
+source script_support/components/CAPE/Hub75/MEM_BIT_PLANE2.tcl
 
 #-------------------------------------------------------------------------------
 # Build the Cape module

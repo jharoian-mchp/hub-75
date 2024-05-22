@@ -79,13 +79,17 @@ end
 genvar upper_red_idx;
 generate
     for(upper_red_idx = 0; upper_red_idx < NR; upper_red_idx = upper_red_idx + 1) begin : red_plane0_inst
-        MEM_BIT_PLANE red_plane0 (
-            .clk(clk),
-            .w_en(upper_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_red[upper_red_idx]),
-            .r_addr(rd_addr),
-            .r_data(r0_bp[upper_red_idx])
+        MEM_BIT_PLANE2 red_plane0 (
+            .clk_a(clk),
+            .w_en_a(upper_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_red[upper_red_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(r0_bp[upper_red_idx])
         );
     end
 endgenerate
@@ -94,13 +98,17 @@ endgenerate
 genvar upper_green_idx;
 generate
     for(upper_green_idx = 0; upper_green_idx < NG; upper_green_idx = upper_green_idx + 1) begin : green_plane0_inst
-        MEM_BIT_PLANE green_plane0 (
-            .clk(clk),
-            .w_en(upper_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_green[upper_green_idx]),
-            .r_addr(rd_addr),
-            .r_data(g0_bp[upper_green_idx])
+        MEM_BIT_PLANE2 green_plane0 (
+            .clk_a(clk),
+            .w_en_a(upper_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_green[upper_green_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(g0_bp[upper_green_idx])
         );
     end
 endgenerate
@@ -109,13 +117,17 @@ endgenerate
 genvar upper_blue_idx;
 generate
     for(upper_blue_idx = 0; upper_blue_idx < NB; upper_blue_idx = upper_blue_idx + 1) begin : blue_plane0_inst
-        MEM_BIT_PLANE blue_plane0 (
-            .clk(clk),
-            .w_en(upper_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_blue[upper_blue_idx]),
-            .r_addr(rd_addr),
-            .r_data(b0_bp[upper_blue_idx])
+        MEM_BIT_PLANE2 blue_plane0 (
+            .clk_a(clk),
+            .w_en_a(upper_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_blue[upper_blue_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(b0_bp[upper_blue_idx])        
         );
     end
 endgenerate
@@ -127,13 +139,17 @@ endgenerate
 genvar lower_red_idx;
 generate
     for(lower_red_idx = 0; lower_red_idx < NR; lower_red_idx = lower_red_idx + 1) begin : red_plane1_inst
-        MEM_BIT_PLANE red_plane1 (
-            .clk(clk),
-            .w_en(lower_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_red[lower_red_idx]),
-            .r_addr(rd_addr),
-            .r_data(r1_bp[lower_red_idx])
+        MEM_BIT_PLANE2 red_plane1 (
+            .clk_a(clk),
+            .w_en_a(lower_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_red[lower_red_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(r1_bp[lower_red_idx])           
         );
     end
 endgenerate
@@ -142,13 +158,17 @@ endgenerate
 genvar lower_green_idx;
 generate
     for(lower_green_idx = 0; lower_green_idx < NG; lower_green_idx = lower_green_idx + 1) begin : green_plane1_inst
-        MEM_BIT_PLANE green_plane1 (
-            .clk(clk),
-            .w_en(lower_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_green[lower_green_idx]),
-            .r_addr(rd_addr),
-            .r_data(g1_bp[lower_green_idx])
+        MEM_BIT_PLANE2 green_plane1 (
+            .clk_a(clk),
+            .w_en_a(lower_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_green[lower_green_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(g1_bp[lower_green_idx])            
         );
     end
 endgenerate
@@ -157,13 +177,17 @@ endgenerate
 genvar lower_blue_idx;
 generate
     for(lower_blue_idx = 0; lower_blue_idx < NB; lower_blue_idx = lower_blue_idx + 1) begin : blue_plane1_inst
-        MEM_BIT_PLANE blue_plane1 (
-            .clk(clk),
-            .w_en(lower_panel_wr_en),
-            .w_addr(wr_addr[13:0]),
-            .w_data(wr_blue[lower_blue_idx]),
-            .r_addr(rd_addr),
-            .r_data(b1_bp[lower_blue_idx])
+        MEM_BIT_PLANE2 blue_plane1 (
+            .clk_a(clk),
+            .w_en_a(lower_panel_wr_en),
+            .addr_a(wr_addr[13:0]),
+            .w_data_a(wr_blue[lower_blue_idx]),
+            
+            .clk_b(clk),
+            .w_en_b(1'b0),
+            .addr_b(rd_addr),
+            .w_data_b(1'b0),
+            .r_data_b(b1_bp[lower_blue_idx])                
         );
     end
 endgenerate
