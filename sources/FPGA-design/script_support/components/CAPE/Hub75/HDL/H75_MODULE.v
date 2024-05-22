@@ -24,6 +24,7 @@ module H75_MODULE(
     
     input           gen_timing,         // control generation of timing signals
     input [9:0]     pixels_per_row,     // number of pixels per row
+    input [11:0]    BCM_count[0:5],     // timing valus for BCM
     
     // memory interface allowing APB writes to framebuffer memory
     input           wr_en,
@@ -76,8 +77,9 @@ end
 H75_TIMING_GENERATOR timing_gen_0 (
     .clk(clk),
     .resetn(resetn),
-    .gen_timing(1'b1),
-    .pixels_per_row(pixels_per_row),    
+    .gen_timing(gen_timing),
+    .pixels_per_row(pixels_per_row), 
+    .BCM_count(BCM_count),   
     
     .frame_sync(FRAME_SYNC_int),
     .oe(PLANE_OE_int),

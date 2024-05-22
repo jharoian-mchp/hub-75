@@ -300,6 +300,7 @@ wire        mem_wr;
 wire [31:0] mem_data;
 wire [14:0] mem_waddr;
 wire [9:0]  pixels_per_row;
+wire [11:0] BCM_count[0:5];
 wire        frame_sync_out;
 wire        rd_valid_out;
 
@@ -372,6 +373,7 @@ apb_ctrl_status apb_ctrl_status_0(
         .prdata  ( APB_SLAVE_PRDATA ),
         .control ( apb_ctrl_status_0_control ),
         .pixels_per_row(pixels_per_row),
+        .BCM_count( BCM_count ),
         .mem_wr  (mem_wr),
         .mem_data (mem_data),
         .mem_waddr (mem_waddr)
@@ -493,8 +495,10 @@ H75_MODULE h75_module_0(
     .clk(PCLK),
     .resetn(PRESETN),
     
+    // control inputs
     .gen_timing(apb_ctrl_status_0_control[0]),                           
     .pixels_per_row(pixels_per_row),        
+    .BCM_count( BCM_count),
     
     // memory interface allowing writes of memory
     .wr_en(mem_wr),

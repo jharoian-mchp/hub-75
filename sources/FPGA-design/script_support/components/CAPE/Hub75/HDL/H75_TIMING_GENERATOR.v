@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Company: <Name>
+// Company: Microchip Technology
 //
 // File: H75_TIMING_GENERATOR.v
 // File history:
@@ -9,37 +9,41 @@
 //
 // Description: 
 //
-// <Description here>
+// Generate timing signals for a HUB75 connected display
+// This module assumes panels are 64x64 and connected with up to 8 in a chain
+// Frame rate at this length is likely to be low so logic is optimised for 5-6 
+// (Hence ideal for a cube)
 //
 // Targeted device: <Family::PolarFireSoC> <Die::MPFS025T> <Package::FCVG484>
-// Author: <Name>
+// Author: Darren Wenn
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 `timescale 1ns / 100ps
 
 module H75_TIMING_GENERATOR( 
-    input               clk,
-    input               resetn,
-    input               gen_timing,
-    input [9:0]         pixels_per_row,
+    input               clk,                // system clock
+    input               resetn,             // active low module reset
+    input               gen_timing,         // generate timing 
+    input [9:0]         pixels_per_row,     // pixels per row
+    input [11:0]        BCM_count[0:5],     // BCM weighted delay time
     
     // internal signals and diagnostics
-    output reg          frame_sync,
-    output reg [2:0]    plane,
-    output [13:0]       rd_addr,             
+    output reg          frame_sync,         // frame sync output (for diagnostics)
+    output reg [2:0]    plane,              // bit plane select for memory module
+    output [13:0]       rd_addr,            // read address for memory module    
 
-    output              oe,    
-    output reg          latch_enable,
-    output              led_clk,
-    output reg [4:0]    ABCDE,
-    output              rd_valid
+    output              oe,                 // led matrix output enable (active low)
+    output reg          latch_enable,       // latch clocked data
+    output              led_clk,            // bit clock for leds
+    output reg [4:0]    ABCDE,              // currently active row to display
+    output              rd_valid            // read valid for diagnostics (includes pipeline delays)
 );
 
-localparam NUM_ROWS = 32;               // number of rows to output
-localparam BCM_FACTOR = 400;            // multiplier for bit plane position and time
-localparam FRAME_START_DELAY = 10;      // delay from start of frame sync to first OE for most significant bit plane
-localparam CLOCK__PERIOD_NS = 20;       // 20ns system clock going to the CAPE
+localparam NUM_ROWS = 32;                   // number of rows to output
+localparam BCM_FACTOR = 400;                // multiplier for bit plane position and time
+localparam FRAME_START_DELAY = 4;           // delay from start of frame sync to first OE for most significant bit plane
+localparam CLOCK__PERIOD_NS = 20;           // 20ns system clock going to the CAPE
 
 // counters and registers for timing
 reg [19:0]      plane_counter;              // used for timing of ON time for planes
@@ -108,7 +112,6 @@ begin
                 end
             S_START_DELAY:
                 begin
-                    //rd_valid <= 1'b0;
                     // short delay after beginning of frame
                     if (delay_counter == 0) begin
                         frame_sync <= 1'b0;
@@ -127,7 +130,6 @@ begin
                 end
             S_INC_X1:
                 begin
-                    //rd_valid <= 1'b0;
                     plane_x <= plane_x + 1;
                     timing_state <= S_INC_X2;
                 end
@@ -148,7 +150,6 @@ begin
                 end
             S_INC_X4:
                 begin
-                    //rd_valid <= 1'b1;
                     timing_state <= S_INC_X5;
                 end
             S_INC_X5:
@@ -162,29 +163,25 @@ begin
                 end
             S_LATCH1:
                 begin
-                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b1;
                     timing_state <= S_LATCH2;
                 end
             S_LATCH2:
                 begin
-                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b0;
                     timing_state <= S_OE;
                 end
             S_OE:
                 begin
-                    //rd_valid <= 1'b0;
                     plane_oe <= 1'b1;
                     // calculate bcm weighted delay time
                     // for 6 screens the time needs to be around 400 clocks.. hence the calculation (PPR * 6)
                     // this will allow sufficient output time for bit plane 2 and bit plane 7
-                    plane_counter <= plane_bcm[5:0] * (pixels_per_row + 6);
+                    plane_counter <= BCM_count[plane - 2]; // plane_bcm[5:0] * (pixels_per_row + 6);
                     timing_state <= S_INC_ROW;
                 end
             S_INC_ROW:
                 begin
-                    //rd_valid <= 1'b0;
                     if (plane_y == (NUM_ROWS - 1)) begin
                         timing_state <= S_ADV_PLANE;
                     end else begin
@@ -195,7 +192,6 @@ begin
                 end
             S_ADV_PLANE:
                 begin
-                    //rd_valid <= 1'b0;
                     // go to the next plane
                     if (plane == 2) begin
                             timing_state <= S_WAIT_FRAMESYNCN;
@@ -209,7 +205,6 @@ begin
                 // it used to wait for frame_sync to be 0 before allowing a restart
                 // (when rising edge of frame_sync was next seen)
                 begin
-                    //rd_valid <= 1'b0;
                     latch_enable <= 1'b0;
                     timing_state <= S_IDLE;
                 end
