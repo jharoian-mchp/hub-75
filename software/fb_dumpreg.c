@@ -114,15 +114,15 @@ void setup_io();
 
 void print_regs()
 {
-    printf("[%0X] STATUS   = 0x%08x\n", FB_STATUS, cape_starting_addr[FB_STATUS]);
-    printf("[%0X] CONTROL  = 0x%08x\n", FB_CONTROL_0, cape_starting_addr[FB_CONTROL_0]);
-    printf("[%0X] PPR      = 0x%08x\n", FB_PPROW_0, cape_starting_addr[FB_PPROW_0]);
-    printf("[%0X] BCM7     = 0x%08x\n", FB_BCM_7, cape_starting_addr[FB_BCM_7]);
-    printf("[%0X] BCM6     = 0x%08x\n", FB_BCM_6, cape_starting_addr[FB_BCM_6]);
-    printf("[%0X] BCM5     = 0x%08x\n", FB_BCM_5, cape_starting_addr[FB_BCM_5]);
-    printf("[%0X] BCM4     = 0x%08x\n", FB_BCM_4, cape_starting_addr[FB_BCM_4]);
-    printf("[%0X] BCM3     = 0x%08x\n", FB_BCM_3, cape_starting_addr[FB_BCM_3]);
-    printf("[%0X] BCM2     = 0x%08x\n", FB_BCM_2, cape_starting_addr[FB_BCM_2]);
+    printf("[%0X] STATUS   = 0x%08X\n", FB_STATUS, cape_starting_addr[FB_STATUS]);
+    printf("[%0X] CONTROL  = 0x%08X\n", FB_CONTROL_0, cape_starting_addr[FB_CONTROL_0]);
+    printf("[%0X] PPR      = 0x%08X\n", FB_PPROW_0, cape_starting_addr[FB_PPROW_0]);
+    printf("[%0X] BCM7     = 0x%08X\n", FB_BCM_7, cape_starting_addr[FB_BCM_7]);
+    printf("[%0X] BCM6     = 0x%08X\n", FB_BCM_6, cape_starting_addr[FB_BCM_6]);
+    printf("[%0X] BCM5     = 0x%08X\n", FB_BCM_5, cape_starting_addr[FB_BCM_5]);
+    printf("[%0X] BCM4     = 0x%08X\n", FB_BCM_4, cape_starting_addr[FB_BCM_4]);
+    printf("[%0X] BCM3     = 0x%08X\n", FB_BCM_3, cape_starting_addr[FB_BCM_3]);
+    printf("[%0X] BCM2     = 0x%08X\n", FB_BCM_2, cape_starting_addr[FB_BCM_2]);
 }
 
 int main(int argc, char **argv)
@@ -158,7 +158,7 @@ int main(int argc, char **argv)
                 long address = map_address(address_str);
                 uint32_t value = (uint32_t)strtol(value_str, NULL, 0);
 
-                printf("Setting address: 0x%lX to %d\n", address, value);
+                printf("Setting address: 0x%lX to %08X\n", address, value);
                 cape_starting_addr[address] = value;
             }
             else
