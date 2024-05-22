@@ -62,50 +62,35 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state)
     return 0;
 }
 
+typedef struct {
+    char reg_name[32];
+    long hex_value;
+} RegMap;
+
+static RegMap registerHexMap[] = {
+    {"STATUS",      0x8000},
+    {"CONTROL",     0x8001},
+    {"PPR",         0x8002},
+    {"BCM7",        0x8003},
+    {"BCM6",        0x8004},
+    {"BCM5",        0x8005},
+    {"BCM4",        0x8006},
+    {"BCM3",        0x8007},
+    {"BCM2",        0x8008}    
+};
+
 // Function to map string address to actual address
 long map_address(const char *address_str)
 {
-    if (strcmp(address_str, "STATUS") == 0)
-    {
-        return 0x8000;
+    int dict_size = sizeof(registerHexMap) / sizeof(registerHexMap[0]);
+    for(int i = 0; i < dict_size; i++) {
+        if (strcmp(address_str, registerHexMap[i].reg_name) == 0) {
+            return registerHexMap[i].hex_value;
+        }
     }
-    else if (strcmp(address_str, "CONTROL") == 0)
-    {
-        return 0x8001;
-    }
-    else if (strcmp(address_str, "PPR") == 0)
-    {
-        return 0x8002;
-    }
-    else if (strcmp(address_str, "BCM7") == 0)
-    {
-        return 0x8003;
-    }
-    else if (strcmp(address_str, "BCM6") == 0)
-    {
-        return 0x8004;
-    }
-    else if (strcmp(address_str, "BCM5") == 0)
-    {
-        return 0x8005;
-    }
-    else if (strcmp(address_str, "BCM4") == 0)
-    {
-        return 0x8006;
-    }
-    else if (strcmp(address_str, "BCM3") == 0)
-    {
-        return 0x8007;
-    }
-    else if (strcmp(address_str, "BCM2") == 0)
-    {
-        return 0x8008;
-    }
-    else
-    {
-        // Try to interpret it as a numerical address
-        return strtol(address_str, NULL, 0);
-    }
+
+    // Try to interpret it as a numerical address
+    return strtol(address_str, NULL, 0);
 }
 
 static struct argp argp = {options, parse_opt, 0, 0};
