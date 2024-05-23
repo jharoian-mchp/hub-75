@@ -7,6 +7,7 @@ import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/blinky.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/apb_ctrl_status.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/H75_TIMING_GENERATOR.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/MEM_BLOCK.v}
+import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/MEM_TEST_PATTERN.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/H75_MODULE.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/P8_IOPADS.v}
 import_files -hdl_source {script_support/components/CAPE/Hub75/HDL/P9_11_18_IOPADS.v}

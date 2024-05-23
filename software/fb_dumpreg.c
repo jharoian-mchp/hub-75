@@ -15,19 +15,19 @@
 #include <unistd.h>
 
 #define BLOCK_SIZE (256 * 1024)
-#define FB_STATUS 0x8000    // Read register
-#define FB_CONTROL_0 0x8001 // Read/write control register
-#define FB_PPROW_0 0x8002   // Pixels per row
-#define FB_BCM_7 0x8003     // BCM bit plane timing registers
-#define FB_BCM_6 0x8004
-#define FB_BCM_5 0x8005
-#define FB_BCM_4 0x8006
-#define FB_BCM_3 0x8007
-#define FB_BCM_2 0x8008
+#define FB_STATUS       0x8000          // Read register
+#define FB_CONTROL_0    0x8001          // Read/write control register
+#define FB_PPROW_0      0x8002          // Pixels per row
+#define FB_BCM_7        0x8003          // BCM bit plane timing registers
+#define FB_BCM_6        0x8004
+#define FB_BCM_5        0x8005
+#define FB_BCM_4        0x8006
+#define FB_BCM_3        0x8007
+#define FB_BCM_2        0x8008
 
-int mem_fd;                            // used only in setup_io
-void *cape_map;                        // used only in setup_io
-volatile unsigned *cape_starting_addr; // set in setup_io
+int mem_fd;                             // used only in setup_io
+void *cape_map;                         // used only in setup_io
+volatile unsigned *cape_starting_addr;  // set in setup_io
 
 struct arguments
 {
@@ -48,16 +48,16 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state)
 
     switch (key)
     {
-    case 'w':
-        arguments->arg_w = arg;
-        arguments->has_arguments = 1;
-        break;
-    case 'p':
-        arguments->print_registers = 1;
-        arguments->has_arguments = 1;
-        break;
-    default:
-        return ARGP_ERR_UNKNOWN;
+        case 'w':
+            arguments->arg_w = arg;
+            arguments->has_arguments = 1;
+            break;
+        case 'p':
+            arguments->print_registers = 1;
+            arguments->has_arguments = 1;
+            break;
+        default:
+            return ARGP_ERR_UNKNOWN;
     }
     return 0;
 }
@@ -79,7 +79,7 @@ static RegMap registerHexMap[] = {
     {"BCM2",        0x8008}    
 };
 
-// Function to map string address to actual address
+// Function to map string register name to address
 long map_address(const char *address_str)
 {
     int dict_size = sizeof(registerHexMap) / sizeof(registerHexMap[0]);
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
                 long address = map_address(address_str);
                 uint32_t value = (uint32_t)strtol(value_str, NULL, 0);
 
-                printf("Setting address: 0x%lX to %08X\n", address, value);
+                printf("Setting address: 0x%lX to 0x%08X\n", address, value);
                 cape_starting_addr[address] = value;
             }
             else

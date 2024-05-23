@@ -24,6 +24,7 @@ module H75_MODULE(
     input           resetn,
     
     input           gen_timing,         // control generation of timing signals
+    input           test_pattern,       // generate test pattern
     input [9:0]     pixels_per_row,     // number of pixels per row
     input [11:0]    BCM_count[0:5],     // timing valus for BCM
     
@@ -59,6 +60,10 @@ wire [4:0] ABCDE_int;
 wire [13:0] RD_ADDR_int;
 wire RD_VALID_int;
 wire LED_CLK_int;
+wire r0_mem, g0_mem, b0_mem;
+wire r1_mem, g1_mem, b1_mem;
+wire r0_test, g0_test, b0_test;
+wire r1_test, g1_test, b1_test;
 
 assign plane_oe = PLANE_OE_int;
 assign latch_enable = LATCH_ENABLE_int;
@@ -66,6 +71,13 @@ assign ABCDE = ABCDE_int;
 assign frame_sync = FRAME_SYNC_int;
 assign led_clk_out = LED_CLK_int;
 assign rd_valid = RD_VALID_int;
+
+assign r0 = (test_pattern == 1'b1) ? r0_test : r0_mem;
+assign g0 = (test_pattern == 1'b1) ? g0_test : g0_mem;
+assign b0 = (test_pattern == 1'b1) ? b0_test : b0_mem;
+assign r1 = (test_pattern == 1'b1) ? r1_test : r1_mem;
+assign g1 = (test_pattern == 1'b1) ? g1_test : g1_mem;
+assign b1 = (test_pattern == 1'b1) ? b1_test : b1_mem;
 
 always @(posedge clk) begin
     if (resetn == 1'b0) begin
@@ -104,8 +116,24 @@ MEM_BLOCK mem_block_0 (
     .rd_addr(RD_ADDR_int),
     .rd_bit_plane(PLANE_int),
     
-    .r0(r0), .g0(g0), .b0(b0),
-    .r1(r1), .g1(g1), .b1(b1)
+    .r0(r0_mem), .g0(g0_mem), .b0(b0_mem),
+    .r1(r1_mem), .g1(g1_mem), .b1(b1_mem)
+);
+
+// instantiate the memory test pattern
+MEM_TEST_PATTERN mem_test_pattern_0 (
+    .clk(clk),
+    .led_clk(led_clk_in),
+    .resetn(resetn),
+    
+    .wr_en(wr_en),
+    .wr_addr(wr_addr),
+    .wr_data(wr_data),
+    .rd_addr(RD_ADDR_int),
+    .rd_bit_plane(PLANE_int),
+    
+    .r0(r0_test), .g0(g0_test), .b0(b0_test),
+    .r1(r1_test), .g1(g1_test), .b1(b1_test)
 );
 
 endmodule

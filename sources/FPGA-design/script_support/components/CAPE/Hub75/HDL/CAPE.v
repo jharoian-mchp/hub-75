@@ -337,12 +337,13 @@ assign GPIO_IN_slice_0 = GPIO_IN_net_2[46:31];
 //--------------------------------------------------------------------
 // Concatenation assignments
 //--------------------------------------------------------------------
-assign GPIO_OE_net_0 = { 16'hFFFF, GPIO_OE[27:6], 1'b1, GPIO_OE[4:3], 3'b111 };
+assign GPIO_OE_net_0 = { 16'hFFFF, GPIO_OE[27:6], 1'b1, GPIO_OE[4:4], 4'b1111 };
 assign GPIO_OUT_net_0 = { 1'b0, led_oe_out, led_latch_out, led_clk_out,
                           abcde_out[3], abcde_out[2], abcde_out[1], abcde_out[0],
                           abcde_out[4], b1_out, g1_out, r1_out,
                           1'b0, b0_out, g0_out, r0_out,
-                          GPIO_OUT[27:6], BLINK, GPIO_OUT[4:3], mem_wr, led_clk_out, frame_sync_out};
+                          GPIO_OUT[27:6], APB_SLAVE_SLAVE_PSEL, GPIO_OUT[4:4], 
+                          APB_SLAVE_SLAVE_PWRITE, mem_wr, led_clk_out, frame_sync_out};
 
 //--------------------------------------------------------------------
 // Bus Interface Nets Assignments - Unequal Pin Widths
@@ -499,7 +500,8 @@ H75_MODULE h75_module_0(
     .resetn(PRESETN),
     
     // control inputs
-    .gen_timing(apb_ctrl_status_0_control[0]),                           
+    .gen_timing(apb_ctrl_status_0_control[0]),
+    .test_pattern(apb_ctrl_status_0_control[1]),
     .pixels_per_row(pixels_per_row),        
     .BCM_count( BCM_count),
     
