@@ -126,9 +126,6 @@ MEM_TEST_PATTERN mem_test_pattern_0 (
     .led_clk(led_clk_in),
     .resetn(resetn),
     
-    .wr_en(wr_en),
-    .wr_addr(wr_addr),
-    .wr_data(wr_data),
     .rd_addr(RD_ADDR_int),
     .rd_bit_plane(PLANE_int),
     

@@ -23,12 +23,9 @@ module MEM_TEST_PATTERN (
     input           led_clk,
     input           resetn,
     
-    input           wr_en,
-    input [14:0]    wr_addr,            // address for (64x8 columns) x (64 rows)
-    input [15:0]    wr_data,            // RGB565 pixel data
-    
     input [13:0]    rd_addr,            // address for (64x8 columns) x (32 rows) row_n and row_n+32 always output
     input [2:0]     rd_bit_plane,       // select active bit plane to output [7:2] ,outputs RGB(N) + RGB(N+32)
+    
     output reg      r0, g0, b0,
     output reg      r1, g1, b1
 );
