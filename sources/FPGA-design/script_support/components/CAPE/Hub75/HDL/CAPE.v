@@ -300,7 +300,7 @@ wire        mem_wr;
 wire [31:0] mem_data;
 wire [14:0] mem_waddr;
 wire [9:0]  pixels_per_row;
-wire [11:0] BCM_count[0:5];
+wire [13:0] BCM_count[0:5];
 wire        frame_sync_out;
 wire        rd_valid_out;
 wire        LED_CLK;

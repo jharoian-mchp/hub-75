@@ -26,7 +26,7 @@ module H75_TIMING_GENERATOR(
     input               resetn,             // active low module reset
     input               gen_timing,         // generate timing 
     input [9:0]         pixels_per_row,     // pixels per row
-    input [11:0]        BCM_count[0:5],     // BCM weighted delay time
+    input [13:0]        BCM_count[0:5],     // BCM weighted delay time
     
     // internal signals and diagnostics
     output reg          frame_sync,         // frame sync output (for diagnostics)

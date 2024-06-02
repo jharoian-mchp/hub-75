@@ -26,7 +26,7 @@ module H75_MODULE(
     input           gen_timing,         // control generation of timing signals
     input           test_pattern,       // generate test pattern
     input [9:0]     pixels_per_row,     // number of pixels per row
-    input [11:0]    BCM_count[0:5],     // timing valus for BCM
+    input [13:0]    BCM_count[0:5],     // timing valus for BCM
     
     // memory interface allowing APB writes to framebuffer memory
     input           wr_en,

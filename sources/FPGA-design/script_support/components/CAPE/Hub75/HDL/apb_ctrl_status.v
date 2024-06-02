@@ -30,7 +30,7 @@ module apb_ctrl_status(
     output reg [31:0]   prdata,
     output reg [31:0]   control,
     output reg [9:0]    pixels_per_row,
-    output reg [11:0]   BCM_count[0:5],
+    output reg [13:0]   BCM_count[0:5],
    
     output reg          mem_wr,
     output reg [15:0]   mem_data,
@@ -51,7 +51,7 @@ module apb_ctrl_status(
     localparam DEFAULT_CONTROL          = 32'h0000_0001;    // enable gen timing
     localparam DEFAULT_PIXELS_PER_ROW   = 10'h40;           // 64 pixels per row default (one screen)
 
-    reg [11:0] BCM_count_value[0:5];                        // Binary Coded Modulation ON time registers
+    reg [13:0] BCM_count_value[0:5];                        // Binary Coded Modulation ON time registers
     reg [31:0] control_value;
     reg [9:0] ppr_value;
     
@@ -112,8 +112,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[5];
                         end else if (wr_enable) begin
-                            BCM_count_value[5] <= pwdata[11:0];
-                            BCM_count[5] <= pwdata[11:0];
+                            BCM_count_value[5] <= pwdata[13:0];
+                            BCM_count[5] <= pwdata[13:0];
                         end
                     end
                 BCM_6:
@@ -121,8 +121,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[4];
                         end else if (wr_enable) begin
-                            BCM_count_value[4] <= pwdata[11:0];
-                            BCM_count[4] <= pwdata[11:0];
+                            BCM_count_value[4] <= pwdata[13:0];
+                            BCM_count[4] <= pwdata[13:0];
                         end
                     end
                 BCM_5:
@@ -130,8 +130,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[3];
                         end else if (wr_enable) begin
-                            BCM_count_value[3] <= pwdata[11:0];
-                            BCM_count[3] <= pwdata[11:0];
+                            BCM_count_value[3] <= pwdata[13:0];
+                            BCM_count[3] <= pwdata[13:0];
                         end
                     end
                 BCM_4:
@@ -139,8 +139,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[2];
                         end else if (wr_enable) begin
-                            BCM_count_value[2] <= pwdata[11:0];
-                            BCM_count[2] <= pwdata[11:0];
+                            BCM_count_value[2] <= pwdata[13:0];
+                            BCM_count[2] <= pwdata[13:0];
                         end
                     end
                 BCM_3:
@@ -148,8 +148,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[1];
                         end else if (wr_enable) begin
-                            BCM_count_value[1] <= pwdata[11:0];
-                            BCM_count[1] <= pwdata[11:0];
+                            BCM_count_value[1] <= pwdata[13:0];
+                            BCM_count[1] <= pwdata[13:0];
                         end
                     end
                 BCM_2:
@@ -157,8 +157,8 @@ module apb_ctrl_status(
                         if (rd_enable) begin
                             prdata <= BCM_count_value[0];
                         end else if (wr_enable) begin
-                            BCM_count_value[0] <= pwdata[11:0];
-                            BCM_count[0] <= pwdata[11:0];
+                            BCM_count_value[0] <= pwdata[13:0];
+                            BCM_count[0] <= pwdata[13:0];
                         end
                     end
                 default:
