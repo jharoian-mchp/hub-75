@@ -32,9 +32,11 @@ module apb_ctrl_status(
     output reg [9:0]    pixels_per_row,
     output reg [13:0]   BCM_count[0:5],
    
-    output reg          mem_wr,
-    output reg [15:0]   mem_data,
-    output reg [14:0]   mem_waddr
+    output reg          mem_wr,         // write enable to framebuffer memory
+    output reg          mem_rd,         // read enable to framebuffer memory
+    output reg [15:0]   mem_wdata,      // write data to framebuffer memory
+    output reg [14:0]   mem_addr,       // address for current framebuffer read/write
+    input [15:0]        mem_rdata       // read data from framebuffer
 );
 
     // addresses of the control/status registers (in 32bit multiples)
@@ -51,11 +53,11 @@ module apb_ctrl_status(
     localparam DEFAULT_CONTROL          = 32'h0000_0001;    // enable gen timing
     localparam DEFAULT_PIXELS_PER_ROW   = 10'h40;           // 64 pixels per row default (one screen)
 
-    reg [13:0] BCM_count_value[0:5];                        // Binary Coded Modulation ON time registers
-    reg [31:0] control_value;
-    reg [9:0] ppr_value;
-    
-    reg mem_wr_0;
+    reg [13:0]  BCM_count_value[0:5];                        // Binary Coded Modulation ON time registers
+    reg [31:0]  control_value;
+    reg [9:0]   ppr_value;
+    reg [31:0]  read_data;
+    reg         read_pending;
     wire rd_enable;
     wire wr_enable;
 
@@ -72,6 +74,12 @@ module apb_ctrl_status(
             // pixels to render, should be multiples of 64
             ppr_value <= DEFAULT_PIXELS_PER_ROW;
             pixels_per_row <= DEFAULT_PIXELS_PER_ROW;
+
+            // read pending flags allows for LSRAM pipeline delay
+            read_pending <= 1'b0;
+            read_data <= 32'b0;
+            mem_rd <= 1'b0;
+            mem_wr <= 1'b0;
 
             // generate the initial values for the Binary Coded Modulation delays
             // these are based upon the number of pixels currently being displayed
@@ -163,14 +171,34 @@ module apb_ctrl_status(
                     end
                 default:
                     begin
-                        // anything else is assumed to be a write to frame buffer memory
-                        mem_wr <= wr_enable;
-                        // extract the bits forming RGB565 from the 32bit ABGR input
-                        mem_data <= {pwdata[23:19],pwdata[15:10],pwdata[7:3]};
-                        mem_waddr <= paddr[16:2];
-                        prdata <= 32'b0;
+                        // anything else is assumed to be an access of frame buffer memory
+                        if (rd_enable) begin
+                            // initiate read operation
+                            mem_addr <= paddr[16:2];
+                            mem_rd <= 1'b1;
+                            mem_wr <= 1'b0;
+                            read_pending <= 1'b1;
+                        end else if (wr_enable) begin
+                            mem_wr <= 1'b1; // wr_enable;
+                            mem_rd <= 1'b0;
+                            // extract the bits forming RGB565 from the 32bit ABGR input
+                            mem_wdata <= {pwdata[23:19],pwdata[15:10],pwdata[7:3]};
+                            mem_addr <= paddr[16:2];
+                            prdata <= 32'b0;
+                        end else begin
+                            mem_wr <= 1'b0;
+                            mem_rd <= 1'b0;
+                        end
                     end
             endcase
+
+            if (read_pending) begin
+                // format data
+                read_data <= {8'hFF, mem_rdata[15:11], 3'b000, mem_rdata[10:5], 2'b00, mem_rdata[4:0], 3'b000};
+                prdata <= read_data;
+                mem_rd <= 1'b0;
+                read_pending <= 1'b0;
+            end
         end
     end
 endmodule

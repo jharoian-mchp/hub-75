@@ -13,7 +13,9 @@
 &{/} {
 
 	fabric-bus@40000000 {
-
+		#address-cells = <0x2>;
+		#size-cells = <0x2>;
+		
 		cape_gpios_p8: gpio@41100000 {
 			compatible = "microchip,core-gpio";
 			reg = <0x0 0x41100000 0x0 0x00040000>;
@@ -31,6 +33,16 @@
 							  "", "P8_36", "P8_37", "P8_38",
 							  "P8_39", "P8_40", "P8_41", "P8_42",
 							  "P8_43", "P8_44", "P8_45", "P8_46";
+		};
+		
+		framebuffer0: framebuffer@41100000 {
+			compatible = "simple-framebuffer";
+			reg = <0x0 0x41100000 0x0 0x00020000>;
+			width = <320>;
+			height = <64>;
+			stride = <2048>;
+			format = "a8b8g8r8";
+			status = "okay";
 		};
 	};
 };

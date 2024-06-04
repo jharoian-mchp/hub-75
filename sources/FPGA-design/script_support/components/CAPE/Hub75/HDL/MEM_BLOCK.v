@@ -32,8 +32,10 @@ module MEM_BLOCK(
     input           resetn,
     
     input           wr_en,
-    input [14:0]    wr_addr,            // address for (64x8 columns) x (64 rows)
-    input [15:0]    wr_data,            // RGB565 pixel data
+    input           rd_en,
+    input [14:0]    addr_a,             // address for (64x8 columns) x (64 rows)
+    input [15:0]    wr_data,            // RGB565 write pixel data
+    output reg [15:0]   rd_data,        // RGB565 read pixel data
     
     input [13:0]    rd_addr,            // address for (64x8 columns) x (32 rows) row_n and row_n+32 always output
     input [2:0]     rd_bit_plane,       // select active bit plane to output [7:2] ,outputs RGB(N) + RGB(N+32)
@@ -48,6 +50,13 @@ wire [NR - 1:0] wr_red;
 wire [NG - 1:0] wr_green;
 wire [NB - 1:0] wr_blue;
 wire upper_panel_wr_en, lower_panel_wr_en;
+wire upper_panel_rd_en, lower_panel_rd_en;
+wire [NR - 1:0] upper_rd_red;
+wire [NG - 1:0] upper_rd_green;
+wire [NB - 1:0] upper_rd_blue;
+wire [NR - 1:0] lower_rd_red;
+wire [NG - 1:0] lower_rd_green;
+wire [NB - 1:0] lower_rd_blue;
 wire [NR - 1:0] r0_bp, r1_bp;  // output bits from the red bit planes
 wire [NG - 1:0] g0_bp, g1_bp;  // output bits from the green bit planes
 wire [NB - 1:0] b0_bp, b1_bp;  // output bits from the blue bit planes
@@ -56,8 +65,13 @@ wire [NB - 1:0] b0_bp, b1_bp;  // output bits from the blue bit planes
 assign wr_red = wr_data[4:0];
 assign wr_green = wr_data[10:5];
 assign wr_blue = wr_data[15:11];
-assign upper_panel_wr_en = ~wr_addr[14] & wr_en;
-assign lower_panel_wr_en = wr_addr[14] & wr_en;
+assign upper_panel_wr_en = ~addr_a[14] & wr_en;
+assign lower_panel_wr_en = addr_a[14] & wr_en;
+assign upper_panel_rd_en = ~addr_a[14] & rd_en;
+assign lower_panel_rd_en = addr_a[14] & rd_en;
+// allow for pipeline delays
+reg upper_rd_pending;
+reg lower_rd_pending;
 
 // multiplexer to select bit plane output based upon selected plane
 always @(*)begin
@@ -73,6 +87,37 @@ always @(*)begin
     endcase    
 end
 
+// select and form the output from the framebuffer memory
+always @(posedge clk or negedge resetn)
+begin
+    if (resetn == 1'b0) begin
+        // reset module
+        rd_data <= 16'h0000;
+        upper_rd_pending <= 1'b0;
+        lower_rd_pending <= 1'b0;
+    end else begin
+        if (rd_en == 1'b1) begin
+            if (addr_a[14] == 1'b0) begin
+                // read of upper block
+                upper_rd_pending <= 1'b1;
+            end else begin
+                // read of lower block
+                lower_rd_pending <= 1'b1;
+            end    
+        end
+
+        if (upper_rd_pending == 1'b1) begin
+            rd_data <= {upper_rd_blue[4:0], upper_rd_green[5:0], upper_rd_red[4:0]};
+            upper_rd_pending <= 1'b0;
+        end
+
+        if (lower_rd_pending == 1'b1) begin
+            rd_data <= {lower_rd_blue[4:0], lower_rd_green[5:0], lower_rd_red[4:0]};
+            lower_rd_pending <= 1'b0;
+        end
+    end
+end
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPPER BIT PLANES
 // Each MEM_BIT_PLANE contains 16384x1bit value representing each bit of the display for that colour
@@ -83,8 +128,10 @@ generate
         MEM_BIT_PLANE2 red_plane0 (
             .clk_a(clk),
             .w_en_a(upper_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(upper_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_red[upper_red_idx]),
+            .r_data_a(upper_rd_red[upper_red_idx]),
             
             .clk_b(led_clk),
             .w_en_b(1'b0),
@@ -102,8 +149,10 @@ generate
         MEM_BIT_PLANE2 green_plane0 (
             .clk_a(clk),
             .w_en_a(upper_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(upper_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_green[upper_green_idx]),
+            .r_data_a(upper_rd_green[upper_green_idx]),
             
             .clk_b(led_clk),
             .w_en_b(1'b0),
@@ -121,8 +170,10 @@ generate
         MEM_BIT_PLANE2 blue_plane0 (
             .clk_a(clk),
             .w_en_a(upper_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(upper_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_blue[upper_blue_idx]),
+            .r_data_a(upper_rd_blue[upper_blue_idx]),
             
             .clk_b(led_clk),
             .w_en_b(1'b0),
@@ -143,8 +194,10 @@ generate
         MEM_BIT_PLANE2 red_plane1 (
             .clk_a(clk),
             .w_en_a(lower_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(lower_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_red[lower_red_idx]),
+            .r_data_a(lower_rd_red[lower_red_idx]),
             
             .clk_b(led_clk),
             .w_en_b(1'b0),
@@ -162,8 +215,10 @@ generate
         MEM_BIT_PLANE2 green_plane1 (
             .clk_a(clk),
             .w_en_a(lower_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(lower_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_green[lower_green_idx]),
+            .r_data_a(lower_rd_green[lower_green_idx]),
             
             .clk_b(led_clk),
             .w_en_b(1'b0),
@@ -181,9 +236,11 @@ generate
         MEM_BIT_PLANE2 blue_plane1 (
             .clk_a(clk),
             .w_en_a(lower_panel_wr_en),
-            .addr_a(wr_addr[13:0]),
+            .r_en_a(lower_panel_rd_en),
+            .addr_a(addr_a[13:0]),
             .w_data_a(wr_blue[lower_blue_idx]),
-            
+            .r_data_a(lower_rd_blue[lower_blue_idx]),
+
             .clk_b(led_clk),
             .w_en_b(1'b0),
             .addr_b(rd_addr),

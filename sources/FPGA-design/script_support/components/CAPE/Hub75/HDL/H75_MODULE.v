@@ -20,7 +20,7 @@
 
 module H75_MODULE(
     input           clk,                // 50MHz clock for memory side interface
-    input           led_clk_in,         // 30MHz for LED interface
+    input           led_clk_in,         // 25MHz for LED interface
     input           resetn,
     
     input           gen_timing,         // control generation of timing signals
@@ -29,10 +29,12 @@ module H75_MODULE(
     input [13:0]    BCM_count[0:5],     // timing valus for BCM
     
     // memory interface allowing APB writes to framebuffer memory
-    input           wr_en,
-    input [14:0]    wr_addr,
-    input [15:0]    wr_data,
-    
+    input           mem_wr_en,
+    input           mem_rd_en,
+    input [14:0]    mem_addr,
+    input [15:0]    mem_wr_data,
+    output [15:0]   mem_rd_data,
+
     // output and output enables signals for the display module
     output wire     plane_oe,
     output wire     latch_enable,
@@ -79,7 +81,7 @@ assign r1 = (test_pattern == 1'b1) ? r1_test : r1_mem;
 assign g1 = (test_pattern == 1'b1) ? g1_test : g1_mem;
 assign b1 = (test_pattern == 1'b1) ? b1_test : b1_mem;
 
-always @(posedge clk) begin
+always @(posedge clk or negedge resetn) begin
     if (resetn == 1'b0) begin
         // reset module
     end else begin
@@ -110,12 +112,14 @@ MEM_BLOCK mem_block_0 (
     .led_clk(led_clk_in),
     .resetn(resetn),
     
-    .wr_en(wr_en),
-    .wr_addr(wr_addr),
-    .wr_data(wr_data),
-    .rd_addr(RD_ADDR_int),
-    .rd_bit_plane(PLANE_int),
+    .wr_en(mem_wr_en),
+    .rd_en(mem_rd_en),
+    .addr_a(mem_addr),
+    .wr_data(mem_wr_data),
+    .rd_data(mem_rd_data),
     
+    .rd_addr(RD_ADDR_int),
+    .rd_bit_plane(PLANE_int),    
     .r0(r0_mem), .g0(g0_mem), .b0(b0_mem),
     .r1(r1_mem), .g1(g1_mem), .b1(b1_mem)
 );

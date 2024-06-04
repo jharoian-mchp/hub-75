@@ -8,6 +8,7 @@ auto_promote_pad_pins -promote_all 0
 # Create top level Scalar Ports
 sd_create_scalar_port -sd_name ${sd_name} -port_name {clk_a} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {clk_b} -port_direction {IN}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {r_en_a} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {w_en_a} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {w_en_b} -port_direction {IN}
 
@@ -31,6 +32,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {PF_DPSRAM_C0} -ins
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:A_CLK" "clk_a" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:A_DIN" "w_data_a" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:A_DOUT" "r_data_a" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:A_REN" "r_en_a" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:A_WEN" "w_en_a" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:B_CLK" "clk_b" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_DPSRAM_C0_0:B_DIN" "w_data_b" }

@@ -297,8 +297,10 @@ wire        led_oe_out;
 wire        led_latch_out;
 wire [4:0]  abcde_out;
 wire        mem_wr;
-wire [31:0] mem_data;
-wire [14:0] mem_waddr;
+wire        mem_rd;
+wire [15:0] mem_wdata;
+wire [14:0] mem_addr;
+wire [15:0] mem_rdata;
 wire [9:0]  pixels_per_row;
 wire [13:0] BCM_count[0:5];
 wire        frame_sync_out;
@@ -370,9 +372,12 @@ apb_ctrl_status apb_ctrl_status_0(
         .control ( apb_ctrl_status_0_control ),
         .pixels_per_row(pixels_per_row),
         .BCM_count( BCM_count ),
+
         .mem_wr  (mem_wr),
-        .mem_data (mem_data),
-        .mem_waddr (mem_waddr)
+        .mem_rd  (mem_rd),
+        .mem_wdata (mem_wdata),
+        .mem_addr (mem_addr),
+        .mem_rdata (mem_rdata)         
         );
 
 //--------P8_IOPADS
@@ -506,10 +511,12 @@ H75_MODULE h75_module_0(
     .BCM_count( BCM_count),
     
     // memory interface allowing writes of memory
-    .wr_en(mem_wr),
-    .wr_addr(mem_waddr),
-    .wr_data(mem_data),    
-    
+    .mem_wr_en(mem_wr),
+    .mem_rd_en(mem_rd),
+    .mem_addr(mem_addr),
+    .mem_wr_data(mem_wdata),  
+    .mem_rd_data(mem_rdata),  
+
     // Latch and output enable signals for the display module
     .plane_oe(led_oe_out),
     .latch_enable(led_latch_out),

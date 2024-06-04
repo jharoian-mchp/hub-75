@@ -35,9 +35,9 @@ module H75_TIMING_GENERATOR(
 
     output              oe,                 // led matrix output enable (active low)
     output reg          latch_enable,       // latch clocked data
-    output              led_clk,            // bit clock for leds
+    output reg          led_clk,            // bit clock for leds
     output reg [4:0]    ABCDE,              // currently active row to display
-    output              rd_valid            // read valid for diagnostics (includes pipeline delays)
+    output reg          rd_valid            // read valid for diagnostics (includes pipeline delays)
 );
 
 localparam NUM_ROWS = 32;                   // number of rows to output
@@ -52,8 +52,6 @@ reg [23:0]      delay_counter;              // general purpose counter used in s
 reg             plane_oe;                   // output enable for the plane (also called BLANK)
 reg [8:0]       plane_x;                    // plane x position (pixel within the row)
 reg [4:0]       plane_y;                    // plane y position (row)
-reg             rd_valid;                   // Read valid signal (accounts for RAM pipeline delay)
-reg             led_clk;                    // clock to matrix
 
 // oe is the output enable for the LEDs, normally this will be inverted plane_oe
 assign oe = ~plane_oe;

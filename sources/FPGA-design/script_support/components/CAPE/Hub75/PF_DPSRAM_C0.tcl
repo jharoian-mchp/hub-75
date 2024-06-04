@@ -15,7 +15,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_DPSRAM:1.1.110} -component
 "A_DOUT_SRST_POLARITY:2"  \
 "A_PMODE:1"  \
 "A_REN_PN:A_REN"  \
-"A_REN_POLARITY:2"  \
+"A_REN_POLARITY:1"  \
 "A_WIDTH:1"  \
 "A_WMODE:0"  \
 "ADDRESSA_PN:A_ADDR"  \
