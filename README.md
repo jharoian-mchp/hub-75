@@ -9,13 +9,16 @@ The BeagleV Fire gateware builder is a Python script that builds both the PolarF
 The following Python libraries are used:
 - GitPython
 - PyYAML
+- Requests
 
 ```
-pip3 install gitpython
-pip3 install pyyaml
+pip3 install GitPython PyYAML requests
 ```
+
+Using a virtual envirnoment is recommended.  Be sure to activate prior to running build script.
 
 ### Microchip Tools
+
 The SoftConsole and Libero tools from Microchip are required by the bitstream builder.
 
 The following environment variables are required for the bitstream builder to use the Microchip tools:
@@ -24,7 +27,11 @@ The following environment variables are required for the bitstream builder to us
 - LIBERO_INSTALL_DIR
 - LM_LICENSE_FILE
 
-An example script for setting up the environment is available [here](https://openbeagle.org/beaglev-fire/Microchip-FPGA-Tools-Setup). 
+An example script for setting up the environment on Ubuntu is located in the tool_scripts folder.  Edit to match environment and source each time a terminal session opens.
+
+```
+source tool_scripts/setup-microchip-tools.sh
+```
 
 ## Usage
 
@@ -34,11 +41,17 @@ python3 build-bitstream.py <YAML Configuration File>
 
 For example, the following command will be build the default beagleV Fire configuration:
 ```
-python3 build-bitstream.py ./build-options/default.yaml
+python3 build-bitstream.py ./customer-fpga-design/my_custom_fpga_design.yaml
 ```
 
 
 ### YAML Configuration Files
+The YAML configuration file for Hub-75 Cube is located in the custom-fpga-design folder.
+
+| Configuration File         | Description          |
+| -------------------------- | -------------------- |
+| my_custom_fpga_design.yaml | Hub-75 Cube gateware |
+
 The YAML configuration files are located in the "build-options" directory.
 
 | Configuration File | Description                                                |
@@ -48,6 +61,7 @@ The YAML configuration files are located in the "build-options" directory.
 | robotics.yaml      | Similar to default but supporting the Robotics cape.       |
 
 ## Supported Platforms
+
 The BeagleV Fire gateware builder has been tested on Ubuntu 20.04.
 
 ## Microchip bitstream-builder
@@ -63,7 +77,7 @@ To initiate a build use the command:
 
 This will hopefully generate a complete bitstream ready for downloading to the target.
 To copy the code to the target use something along the lines of:
-`scp -r ./bitstream beagle@192.168.2.167:/home/beagle`
+`scp -r ./bitstream beagle@<IP address>:/home/beagle`
 This will copy the compiled bitstream and device tree overlay to the target board.
 # If the build didn't work
 Rather than digging through the log, if the build did not succeed then from the command line try going into libero.
