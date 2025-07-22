@@ -14,8 +14,10 @@ if {[string compare [lindex $libero_release 0] "2022"] == 0 && [string compare [
     puts "Libero v2023.2 detected."
 } elseif {[string compare [lindex $libero_release 0] "2024"] == 0 && [string compare [lindex $libero_release 1] "1"] == 0} {
     puts "Libero v2024.1 detected."
+} elseif {[string compare [lindex $libero_release 0] "2024"] == 0 && [string compare [lindex $libero_release 1] "2"] == 0} {
+    puts "Libero v2024.2 detected."
 } else {
-    error "Incorrect Libero version detected. Please use Libero v2023.2, v2022.3 or v2024.1 to run these scripts."
+    error "Incorrect Libero version detected. Please use Libero v2023.2, v2022.3, v2024.1 or v2024.2 to run these scripts."
 }
 
 
