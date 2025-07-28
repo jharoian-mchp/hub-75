@@ -5,10 +5,9 @@ This document provides step-by-step instructions to prepare a newly purchased Be
 Clone this repo into a directory in the home directory, like Projects or similar.
 
 ```
+cd Projects
 git clone https://github.com/jharoian-mchp/hub-75.git
 ```
-
-
 
 ## Overview
 The process involves several major tasks as detailed below:
@@ -98,7 +97,7 @@ Set up environment and copy configuration from Hub-75 repo:
 ```
 export CROSS_COMPILE=riscv64-linux-gnu-
 export ARCH=riscv
-cp ../hub-75/helpers\ and\ artifacts/ubuntu.config .config
+cp ../hub-75/artifacts/ubuntu.config .config
 make menuconfig
 ```
 
@@ -122,11 +121,11 @@ make -j4
 
 ### Make Image
 
-While in the linux directory, copy the kernel build artifact into the hub-75 "helpers and artifacts" directory to make the final image for the BeagleV-Fire
+While in the linux directory, copy the kernel build artifact into the hub-75 "artifacts" directory to make the final image for the BeagleV-Fire
 
 ```
-cp arch/riscv/boot/Image* ../hub-75/helpers\ and\ artifacts/
-cd ../hub-75/helpers\ and\ artifacts/
+cp arch/riscv/boot/Image* ../hub-75/artifacts/
+cd ../hub-75/artifacts/
 mkimage -f beaglev_fire.its beagle_fire.itb
 ```
 
@@ -177,5 +176,45 @@ In the boot partition, rename beaglev_fire.itb to a new name like beaglev_fire_o
 
 Copy the new beaglev_fire.itb to the board, eject the drives, and reboot.
 
+## Update gateware on BeagleV-Fire
 
+Move back into the hub-75 directory
+
+```
+cd ..
+pwd
+/home/c14029/Projects/hub-75
+```
+
+In order to build the Hub-75 gateware, Libero 2024.2 needs to be installed and licensed.  Instructions located here:
+
+https://ww1.microchip.com/downloads/aemDocuments/documents/FPGA/swdocs/libero/Libero_Installation_Licensing_Setup_User_Guide_2024_2.pdf
+
+Additionally, a python virtual environment should be setup:
+
+```
+cd ~/Projects
+python3 -m venv .beaglev-fire
+source .beaglev-fire/bin/activate
+pip3 install GitPython PyYAML requests
+cd hub-75
+```
+
+Once completed then source the script to setup the environment.  Please edit to ensure that the paths are correct for the tools and license file:
+
+```
+source artifacts/setup-microchip-tools.sh
+```
+
+Start gateware build:
+
+```
+python3 build-bitstream.py custom-fpga-design/my_custom_fpga_design.yaml
+```
+
+Secure copy the resulting bitstream directory to the target:
+
+```
+scp 
+```
 
