@@ -274,11 +274,16 @@ file mkdir $prog_export_path/DirectC
 if !{[info exists ONLY_CREATE_DESIGN]} {
     run_tool -name {SYNTHESIZE}
     run_tool -name {PLACEROUTE}
+    #  Verify Timing likely not needed for MASTERs   RBE
     run_tool -name {VERIFYTIMING}
     if {[info exists HSS_IMAGE_PATH]} {
         create_eNVM_config "$local_dir/script_support/components/MSS/ENVM.cfg" "$HSS_IMAGE_PATH"
+        # hard path to .hex file. Not sure if HSS_IMAGE_PATH is being set   RBE
+        #create_eNVM_config "$local_dir/script_support/components/MSS/ENVM.cfg" {../script_support/hss-envm-wrapper.mpfs-icicle-kit-es.hex}
         run_tool -name {GENERATEPROGRAMMINGDATA}
         configure_envm -cfg_file {script_support/components/MSS/ENVM.cfg}
+        ##  configure_envm command docs say the following command needs to be run immediately after configure_envm   RBE
+        generate_design_initialization_data
         source ./script_support/export_spi_prog_file.tcl
        configure_spiflash -cfg_file {./script_support/spiflash.cfg} 
         run_tool -name {GENERATEPROGRAMMINGFILE} 
