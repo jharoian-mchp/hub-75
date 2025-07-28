@@ -73,10 +73,6 @@ Both of the remaining tasks are needed to use the Hub-75 peripheral from Linux. 
 
 The frame-buffer driver is not normally a module or built-in driver for Linux, so a custom configured version of the kernel needs to be compiled and moved to the target.
 
-The correct version of the kernel is in place if a directory listing of the /dev/ directory shows a /dev/fb0 device.   A newly imaged device will not:
-
-![](/home/c14029/Projects/hub-75/docs/images/check_fb0.png)
-
 ### Setup RISC-V Cross Compiler
 
 Install RISC-V cross compiler and kernel dependencies via apt:
@@ -84,7 +80,7 @@ Install RISC-V cross compiler and kernel dependencies via apt:
 ```
 sudo apt install build-essential git gcc-riscv64-linux-gnu bc binutils bison \
 				 dwarves flex  make openssl perl-base libssl-dev libelf-dev \
-				 libncurses5-dev libncursesw5-dev ncurses-dev
+				 libncurses5-dev libncursesw5-dev ncurses-dev u-boot-tools
 ```
 
 ### Get Kernel sources
@@ -125,4 +121,61 @@ make -j4
 ```
 
 ### Make Image
+
+While in the linux directory, copy the kernel build artifact into the hub-75 "helpers and artifacts" directory to make the final image for the BeagleV-Fire
+
+```
+cp arch/riscv/boot/Image* ../hub-75/helpers\ and\ artifacts/
+cd ../hub-75/helpers\ and\ artifacts/
+mkimage -f beaglev_fire.its beagle_fire.itb
+```
+
+Output from mkimage:
+
+```
+FIT description: U-Boot fitImage for the BeagleV-Fire
+Created:         Mon Jul 28 15:58:12 2025
+ Image 0 (kernel)
+  Description:  Linux kernel
+  Created:      Mon Jul 28 15:58:12 2025
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    9494340 Bytes = 9271.82 KiB = 9.05 MiB
+  Architecture: RISC-V
+  OS:           Linux
+  Load Address: 0x80200000
+  Entry Point:  0x80200000
+  Hash algo:    sha256
+  Hash value:   35fe5d48da361c715c9581d49d9e1bbc49a375ab5285acc059df8c97a5d80452
+ Image 1 (base_fdt)
+  Description:  Flattened Device Tree blob
+  Created:      Mon Jul 28 15:58:12 2025
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    24063 Bytes = 23.50 KiB = 0.02 MiB
+  Architecture: RISC-V
+  Load Address: 0x8a000000
+  Hash algo:    sha256
+  Hash value:   5e184e12ffbbadeeec56f55c4defcae040f1200496b5043fcd44ba6479029c7d
+ Default Configuration: 'kernel_dtb'
+ Configuration 0 (kernel_dtb)
+  Description:  1 Linux kernel, FDT blob
+  Kernel:       kernel
+  FDT:          base_fdt
+ Configuration 1 (base_dtb)
+  Description:  Base FDT blob for BeagleV-Fire board
+  Kernel:       unavailable
+  FDT:          base_fdt
+
+```
+
+### Copy new Kernel to BeagleV-Fire
+
+Mount the BeagleV-Fire as a USB drive again.  When mounted, there will be two drives.  One will contain the current beaglev_fire.itb (1D5C_EFDA) and the other is the root file system.
+
+In the boot partition, rename beaglev_fire.itb to a new name like beaglev_fire_orig.itb.  If something goes wrong, the board can be mounted and the original file can be put back (renamed again) and the board will boot without having to reimage the whole eMMC.
+
+Copy the new beaglev_fire.itb to the board, eject the drives, and reboot.
+
+
 
