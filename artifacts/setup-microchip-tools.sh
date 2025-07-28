@@ -10,7 +10,7 @@
 export SC_INSTALL_DIR=/home/$USER/microchip/SoftConsole-v2022.2-RISC-V-747
 export LIBERO_INSTALL_DIR=/home/$USER/microchip/Libero_SoC_v2024.2
 export LICENSE_DAEMON_DIR=/home/$USER/microchip/daemons
-export LICENSE_FILE_DIR=/home/$USER/Microchip/license
+export LICENSE_FILE_DIR=/home/$USER/microchip/license
 
 #===============================================================================
 # The following was tested on Ubuntu 20.04 with:
