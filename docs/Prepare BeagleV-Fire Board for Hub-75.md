@@ -215,6 +215,19 @@ python3 build-bitstream.py custom-fpga-design/my_custom_fpga_design.yaml
 Secure copy the resulting bitstream directory to the target:
 
 ```
-scp 
+scp -r bitstream/ beagle@<IP address>:/home/beagle
 ```
 
+On the target, execute the following:
+
+```
+sudo /usr/share/beagleboard/gateware/change-gateware.sh bitstream/
+```
+
+The above command will load the gateware into the SPI flash and then reboot the board.
+
+The BeagleV-Fire is now ready to drive the LED panels with the Hub-75 peripheral.
+
+## Notes
+
+Included in the Hub-75 repo is a pre-made kernel and bitstream folder.  Both are located in the hub-75/artifacts/target-ready-files folder
