@@ -64,6 +64,9 @@ If the BeagleV-Fire is connected to a computer during the sequence above, using 
 ### Select No for custom settings
 ![](images/Pasted image 20250725140535.png)
 ### Press the RESET button when imaging is completed
+
+The board will come up and after the login prompt appears, it will continue to configure itself and reboot.  Wait for the reboot to complete prior to continuing to the next step.
+
 ![](images/Pasted image 20250725141913.png)
 
 ## Update the Kernel to enable the simple frame-buffer
