@@ -14,6 +14,7 @@ The process involves several major tasks as detailed below:
 - Update the board to Ubuntu 24.04
 - Update the kernel to include the simple-frame buffer driver
 - Update the gateware to include the Hub-75 peripheral
+- Load scripts and software for the BeagleV-Fire
 ## Update to Ubuntu 24.04
 The BeagleV-Fire board currently ships with Ubuntu 23.04 which went End of Life on January 25, 2024.  
 
@@ -230,6 +231,22 @@ sudo /usr/share/beagleboard/gateware/change-gateware.sh bitstream/
 The above command will load the gateware into the SPI flash and then reboot the board.
 
 The BeagleV-Fire is now ready to drive the LED panels with the Hub-75 peripheral.
+
+## Load scripts and software on BeagleV-Fire
+
+```
+scp -r software/ artifacts/target-scripts/ beagle@<IP address>:/home/beagle
+```
+
+On the BeagleV-Fire, execute the following commands:
+
+```
+cd /home/beagle/target-scripts/
+source prep-client-software.sh
+cd cd ../software
+make
+sudo make install
+```
 
 ## Notes
 
