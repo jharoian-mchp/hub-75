@@ -126,7 +126,7 @@ While in the linux directory, copy the kernel build artifact into the hub-75 "ar
 ```
 cp arch/riscv/boot/Image* ../hub-75/artifacts/
 cd ../hub-75/artifacts/
-mkimage -f beaglev_fire.its beagle_fire.itb
+mkimage -f beaglev_fire.its beaglev_fire.itb
 ```
 
 Output from mkimage:
