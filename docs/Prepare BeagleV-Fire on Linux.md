@@ -109,11 +109,11 @@ make menuconfig
 
 Select Device Drivers/Graphics support/Frame buffer Devices.  Enable Support for frame buffer device drivers:
 
-![](/home/c14029/Projects/hub-75/docs/images/enablefb.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\enablefb.png)
 
 Enable Simple framebuffer support:
 
-![](/home/c14029/Projects/hub-75/docs/images/simplefb.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\simplefb.png)
 
 Ensure both are built-in (*) and **not** a module (M).  Exit and save new configuration.
 
