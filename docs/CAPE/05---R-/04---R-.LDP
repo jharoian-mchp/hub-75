@@ -1,0 +1,3 @@
+Layer Pairs Export File for PCB: C:\ALTIUM_WORK\Lucian Proj\Darren Wenn project for MASTERS\BeagleV adapter_Ver1_ cu detalii sterse pentru gerbere\PCB\2 Layers.PcbDoc
+LayersSetName=Top_Bot_Thru_Holes|DrillFile=04---r--roundholes.txt|DrillLayers=gtl,gbl
+LayersSetName=Top_Bot_Slot_Holes|DrillFile=04---r--slotholes.txt|DrillLayers=gtl,gbl
