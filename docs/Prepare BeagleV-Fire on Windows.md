@@ -1,6 +1,6 @@
-# Prepare BeagleV-Fire Board for Hub-75
+# Prepare BeagleV-Fire Board on Windows
 
-This document provides step-by-step instructions to prepare a newly purchased BeagleV-Fire board for use in the Hub-75 LED Cube design.  Ubuntu 22.04 was used as the host OS.
+This document provides step-by-step instructions to prepare a newly purchased BeagleV-Fire board for use in the Hub-75 LED Cube design.  Windows 10 was used as the host OS.
 
 Clone this repo into a directory in the home directory, like Projects or similar.
 
@@ -21,26 +21,25 @@ The BeagleV-Fire board currently ships with Ubuntu 23.04 which went End of Life 
 Ubuntu Releases page for more dates and information:
 https://wiki.ubuntu.com/Releases
 
-In order to update the board, a whole image replacement is necessary.  The easiest method uses the Beagle Board Imaging Utility while the board is connected via USB as a Mass Storage Device.
+In order to update the board, a whole image replacement is necessary.  The easiest method uses the Beagle Board Imaging Utility while the board is connected via USB as a Mass Storage Device.  
 
-Link to Beagle Board Imaging Utility:
-https://www.beagleboard.org/bb-imager
+Unfortunately, the Beagle Board Imaging Utility v0.0.12 does not launch on Windows 10.  The recommended approach is to use the Raspberry Pi Imager since the Beagle Board Imaging Utility is based on it.
 
-![](images/Pasted image 20250725131539.png)
-After downloading the correct architecture version for Ubuntu/Debian, perform the following commands:
+Link to Raspberry Pi Imager:
+https://www.raspberrypi.com/software/
 
-```
-cd ~/Downloads
-sudo dpkg -i bb-imager-gui_0.0.12_amd64.deb
-```
+![](C:\Users\c14029\Projects\hub-75\docs\images\RaspPiImager.jpg)
+After downloading the correct architecture version for Windows, double click, install and launch. 
 
-### Select BeagleV-Fire Board
-![](images/Pasted image 20250725140201.png)
+Download the Ubuntu 24.04 image from here (filter on BeagleV-Fire):
 
-
+https://www.beagleboard.org/distros
 
 ### Select BeagleV-Fire Ubuntu 24.04
-![](images/Pasted image 20250725140134.png)
+
+On the Raspberry Pi Imager GUI, ignore the Raspberry Pi Device and select "Use custom" from the Operating System selection.  (Scroll down to see)
+
+![](C:\Users\c14029\Projects\hub-75\docs\images\usecustom.jpg)
 ### Place BeagleV-Fire board into USB Mass Storage mode
 To mount the BeagleV-Fire as a USB drive, the following sequence is used:
 - If the board is powered and booted, press the Reset button to restart the boot sequence
@@ -48,27 +47,25 @@ To mount the BeagleV-Fire as a USB drive, the following sequence is used:
 - After a couple of seconds, release the USER button
 - The board should connect and enumerate to the computer as a USB Mass Storage device.
 
-If the BeagleV-Fire is connected to a computer during the sequence above, using a terminal window (mini-term, screen, etc) will show the following:
+If the BeagleV-Fire is connected to a computer during the sequence above, using a terminal window (TeraTerm, etc) will show the following:
 
-![](images/Pasted image 20250725140309.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\usbdrive.jpg)
 
 > [!NOTE]
 > Holding the USER button will pause the boot sequence until the USER button is released.  The key time to press the USER button is during the DDR training sequence which is the first item during the boot process.
 >
 ### Select BeagleV-Fire as the destination
 
-![](images/Pasted image 20250725140422.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\selectdrive.jpg)
 
-### Click Write to start the imaging
+### Click Next to start the imaging
 
-![](images/Pasted image 20250725140506.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\selectnext.jpg)
 ### Select No for custom settings
-![](images/Pasted image 20250725140535.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\selectnoforcustom.jpg)
 ### Press the RESET button when imaging is completed
 
-The board will come up and after the login prompt appears, it will continue to configure itself and reboot.  Wait for the reboot to complete prior to continuing to the next step.
-
-![](images/Pasted image 20250725141913.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\firstboot.jpg)
 
 ## Update the Kernel to enable the simple frame-buffer
 
