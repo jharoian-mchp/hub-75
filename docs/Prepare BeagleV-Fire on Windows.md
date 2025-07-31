@@ -130,8 +130,8 @@ make -j4
 While in the linux directory, copy the kernel build artifact into the hub-75 "artifacts" directory to make the final image for the BeagleV-Fire
 
 ```
-cp arch/riscv/boot/Image* ../hub-75/artifacts/
-cd ../hub-75/artifacts/
+cp arch/riscv/boot/Image* /mnt/c/Users/<Windows User Name>/Projects/hub-75/artifacts/deploy-image
+cd /mnt/c/Users/<Windows User Name>/Projects/hub-75/artifacts/deploy-image
 mkimage -f beaglev_fire.its beaglev_fire.itb
 ```
 
@@ -176,7 +176,7 @@ Created:         Mon Jul 28 15:58:12 2025
 
 ### Copy new Kernel to BeagleV-Fire
 
-Mount the BeagleV-Fire as a USB drive again.  When mounted, there will be two drives.  One will contain the current beaglev_fire.itb (1D5C_EFDA) and the other is the root file system.
+Mount the BeagleV-Fire as a USB drive again.  When mounted, there will be multiple drives.  One will contain the current beaglev_fire.itb and the other is the root file system. Windows will complain about the root file system.  Do **not** instruct it to fix or format the drive.
 
 In the boot partition, rename beaglev_fire.itb to a new name like beaglev_fire_orig.itb.  If something goes wrong, the board can be mounted and the original file can be put back (renamed again) and the board will boot without having to reimage the whole eMMC.
 
@@ -184,10 +184,10 @@ Copy the new beaglev_fire.itb to the board, eject the drives, and reboot.
 
 ## Update gateware on BeagleV-Fire
 
-Move back into the hub-75 directory
+Move back into the hub-75 directory in a Command Prompt (CMD.exe) window.
 
 ```
-cd ..
+cd Projects/hub-75
 pwd
 /home/c14029/Projects/hub-75
 ```
@@ -196,32 +196,48 @@ In order to build the Hub-75 gateware, Libero 2024.2 needs to be installed and l
 
 https://ww1.microchip.com/downloads/aemDocuments/documents/FPGA/swdocs/libero/Libero_Installation_Licensing_Setup_User_Guide_2024_2.pdf
 
+SoftConsole needs to be installed.  Instructions are located here:
+
+https://www.microchip.com/en-us/products/fpgas-and-plds/fpga-and-soc-design-tools/soc-fpga/softconsole
+
+System Environment variables need to be setup for the gateware script:
+
+![sysenv1](C:\Users\c14029\Projects\hub-75\docs\images\sysenv1.jpg)
+
+Path specifically:
+
+![](C:\Users\c14029\Projects\hub-75\docs\images\path.jpg)
+
+One other component needed is Msys2.  Follow the installation instructions for Msys2:
+
+https://www.msys2.org/wiki/MSYS2-installation/
+
+Make sure c:\msys2\usr\bin is in the path and install make:
+
+```
+pacman -S make
+```
+
 Additionally, a python virtual environment should be setup:
 
 ```
-cd ~/Projects
-python3 -m venv .beaglev-fire
-source .beaglev-fire/bin/activate
-pip3 install GitPython PyYAML requests
+cd \Users\<Windows User Name>\Projects
+python -m venv beaglev-fire
+.beaglev-fire\Scripts\activate.bat
+pip install GitPython PyYAML requests
 cd hub-75
-```
-
-Once completed then source the script to setup the environment.  Please edit to ensure that the paths are correct for the tools and license file:
-
-```
-source artifacts/setup-microchip-tools.sh
 ```
 
 Start gateware build:
 
 ```
-python3 build-bitstream.py custom-fpga-design/my_custom_fpga_design.yaml
+python build-bitstream.py custom-fpga-design\my_custom_fpga_design.yaml
 ```
 
 Secure copy the resulting bitstream directory to the target:
 
 ```
-scp -r bitstream/ beagle@<IP address>:/home/beagle
+scp -r -O bitstream/* beagle@<IP address>:/home/beagle
 ```
 
 On the target, execute the following:
@@ -237,7 +253,7 @@ The BeagleV-Fire is now ready to drive the LED panels with the Hub-75 peripheral
 ## Load scripts and software on BeagleV-Fire
 
 ```
-scp -r software/ artifacts/target-scripts/ beagle@<IP address>:/home/beagle
+scp -r -O software/ artifacts/target-scripts/ beagle@<IP address>:/home/beagle
 ```
 
 On the BeagleV-Fire, execute the following commands:
