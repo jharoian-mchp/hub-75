@@ -400,14 +400,14 @@ def generate_libero_project(libero, yaml_input_file, fpga_design_sources_path, b
     # Execute the Libero TCL script used to create the Libero design
     initial_directory = os.getcwd()
     os.chdir(fpga_design_sources_path)
-    project_location = os.path.join(build_dir_path, "work", "libero")
-    script = os.path.join(fpga_design_sources_path, "BUILD_BVF_GATEWARE.tcl")
+    project_location = os.path.join("..", "..", build_dir_path, "work", "libero")
+    script = "BUILD_BVF_GATEWARE.tcl"
 
     script_args = get_libero_script_args(yaml_input_file)
     design_version = get_design_version(yaml_input_file)
 
-    hss_image_location = os.path.join(build_dir_path, "work", "HSS", "hss-envm-wrapper-bm1-p0.hex")
-    prog_export_path = build_dir_path
+    hss_image_location = os.path.join("..", "..", "work", "HSS", "hss-envm-wrapper-bm1-p0.hex")
+    prog_export_path = os.path.join("..", "..", build_dir_path)
 
     top_level_name = get_top_level_name()
     print("top level name: ", top_level_name)
@@ -422,7 +422,7 @@ def build_gateware(yaml_input_file_path, build_dir, gateware_top_dir):
     global softconsole_headless
     global programming
 
-    log_file_path = os.path.join(build_dir, "build_log.txt")
+    log_file_path = os.path.join("build_log.txt")
     original_stdout = sys.stdout
     sys.stdout = Logger(log_file_path)
 

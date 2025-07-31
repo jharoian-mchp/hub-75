@@ -24,14 +24,13 @@ def build_bitstreams(build_option_files):
     build_dir = "builds"
     if not os.path.exists(build_dir):
         os.makedirs(build_dir)
-    os.chdir(build_dir)
 
     for build_option in build_option_files:
         option_build_dir_name = os.path.splitext(os.path.basename(build_option))[0]
         print("Build bistream configuration: ", option_build_dir_name)
         cwd = os.getcwd()
-        dst_dir = os.path.join(cwd, option_build_dir_name)
-
+        dst_dir = os.path.join(build_dir, option_build_dir_name)
+        
         if not os.path.exists(dst_dir):
             os.makedirs(dst_dir)
         os.chdir(dst_dir)
@@ -39,10 +38,7 @@ def build_bitstreams(build_option_files):
         build_option_path = os.path.join(tester_top_dir, build_option)
 
         build_gateware(build_option_path, dst_dir, tester_top_dir)
-        os.chdir('..')
-
-    os.chdir('..')
-
+        os.chdir('../..')
 
 def make_chdir(dir_name):
     if not os.path.exists(dir_name):

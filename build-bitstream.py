@@ -68,10 +68,7 @@ def main():
 
     parse_arguments()
 
-    build_dir = os.getcwd()
-    gateware_top_dir = build_dir
-
-    build_gateware(yaml_input_file, build_dir, gateware_top_dir)
+    build_gateware(yaml_input_file, ".", ".")
 
 
 if __name__ == '__main__':
