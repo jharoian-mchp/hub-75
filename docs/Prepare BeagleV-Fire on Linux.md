@@ -83,7 +83,8 @@ Install RISC-V cross compiler and kernel dependencies via apt:
 ```
 sudo apt install build-essential git gcc-riscv64-linux-gnu bc binutils bison \
 				 dwarves flex  make openssl perl-base libssl-dev libelf-dev \
-				 libncurses5-dev libncursesw5-dev ncurses-dev u-boot-tools
+				 libncurses5-dev libncursesw5-dev ncurses-dev u-boot-tools \
+				 cpio
 ```
 
 ### Get Kernel sources

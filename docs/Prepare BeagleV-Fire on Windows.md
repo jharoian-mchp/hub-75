@@ -73,6 +73,10 @@ Both of the remaining tasks are needed to use the Hub-75 peripheral from Linux. 
 
 The frame-buffer driver is not normally a module or built-in driver for Linux, so a custom configured version of the kernel needs to be compiled and moved to the target.
 
+For Windows, WSL2 is recommended for the following steps.  To install and enable Ubuntu on WSL2, please follow Microsoft's instructions located here:
+
+https://learn.microsoft.com/en-us/windows/wsl/about
+
 ### Setup RISC-V Cross Compiler
 
 Install RISC-V cross compiler and kernel dependencies via apt:
@@ -80,7 +84,8 @@ Install RISC-V cross compiler and kernel dependencies via apt:
 ```
 sudo apt install build-essential git gcc-riscv64-linux-gnu bc binutils bison \
 				 dwarves flex  make openssl perl-base libssl-dev libelf-dev \
-				 libncurses5-dev libncursesw5-dev ncurses-dev u-boot-tools
+				 libncurses5-dev libncursesw5-dev ncurses-dev u-boot-tools \
+				 cpio
 ```
 
 ### Get Kernel sources
@@ -98,7 +103,7 @@ Set up environment and copy configuration from Hub-75 repo:
 ```
 export CROSS_COMPILE=riscv64-linux-gnu-
 export ARCH=riscv
-cp ../hub-75/artifacts/ubuntu.config .config
+cp /mnt/c/Users/<Windows User name>/Projects/hub-75/artifacts/ubuntu.config .config
 make menuconfig
 ```
 
@@ -106,11 +111,11 @@ make menuconfig
 
 Select Device Drivers/Graphics support/Frame buffer Devices.  Enable Support for frame buffer device drivers:
 
-![](/home/c14029/Projects/hub-75/docs/images/enablefb.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\enablefb.png)
 
 Enable Simple framebuffer support:
 
-![](/home/c14029/Projects/hub-75/docs/images/simplefb.png)
+![](C:\Users\c14029\Projects\hub-75\docs\images\simplefb.png)
 
 Ensure both are built-in (*) and **not** a module (M).  Exit and save new configuration.
 
