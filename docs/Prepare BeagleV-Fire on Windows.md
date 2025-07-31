@@ -260,7 +260,9 @@ On the BeagleV-Fire, execute the following commands:
 
 ```
 cd /home/beagle/target-scripts/
+dos2unix prep-client-software.sh
 source prep-client-software.sh
+
 cd cd ../software
 make
 sudo make install
