@@ -244,7 +244,7 @@ On the BeagleV-Fire, execute the following commands:
 ```
 cd /home/beagle/target-scripts/
 source prep-client-software.sh
-cd cd ../software
+cd software
 make
 sudo make install
 ```

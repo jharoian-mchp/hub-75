@@ -263,7 +263,7 @@ cd /home/beagle/target-scripts/
 dos2unix prep-client-software.sh
 source prep-client-software.sh
 
-cd cd ../software
+cd software
 make
 sudo make install
 ```
